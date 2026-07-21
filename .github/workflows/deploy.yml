@@ -33,11 +33,15 @@ jobs:
 
       - name: Deploy to Scaleway Pages
         run: |
-          scw config set secret-key=$SCW_SECRET_KEY
-          scw config set project-id=$SCW_PROJECT_ID
-          scw config set default-region=fr-par
-          scw object bucket create name=$SCW_BUCKET_NAME region=fr-par project-id=$SCW_PROJECT_ID 2>/dev/null || true
-          scw object sync source=dist/ destination=s3://$SCW_BUCKET_NAME
+          mkdir -p ~/.config/scw
+          cat > ~/.config/scw/config.yaml << EOF
+          secret_key: ${SCW_SECRET_KEY}
+          default_project_id: ${SCW_PROJECT_ID}
+          default_region: fr-par
+          default_zone: fr-par-1
+          EOF
+          scw object bucket create name=${SCW_BUCKET_NAME} region=fr-par 2>/dev/null || true
+          scw object sync source=dist/ destination=s3://${SCW_BUCKET_NAME}
         env:
           SCW_SECRET_KEY: ${{ secrets.SCW_SECRET_KEY }}
           SCW_PROJECT_ID: ${{ secrets.SCW_PROJECT_ID }}
