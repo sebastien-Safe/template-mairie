@@ -3,9 +3,10 @@ import CharteRepublicaine from "../layouts/CharteRepublicaine.astro";
 import Nav from "../components/Nav.astro";
 import Footer from "../components/Footer.astro";
 import BandeauUrgence from "../components/BandeauUrgence.astro";
+import { commune } from "../lib/config";
 ---
 
-<CharteRepublicaine title="La mairie — NOM_COMMUNE">
+<CharteRepublicaine title={`La mairie — ${commune.nom_commune}`}>
   <BandeauUrgence slot="bandeau-urgence" />
   <Nav slot="nav" />
 
@@ -17,15 +18,15 @@ import BandeauUrgence from "../components/BandeauUrgence.astro";
       <dl class="equipe">
         <div class="membre">
           <dt>Maire</dt>
-          <dd>NOM_MAIRE</dd>
+          <dd>{commune.nom_maire}</dd>
         </div>
         <div class="membre">
           <dt>1er adjoint</dt>
-          <dd>NOM_ADJOINT_1</dd>
+          <dd>Marie Lefèvre</dd>
         </div>
         <div class="membre">
           <dt>2e adjoint</dt>
-          <dd>NOM_ADJOINT_2</dd>
+          <dd>Pierre Dubois</dd>
         </div>
       </dl>
     </section>

@@ -1,0 +1,72 @@
+---
+import { readFileSync, readdirSync } from "fs";
+import { join } from "path";
+
+interface Association {
+  nom: string;
+  description: string;
+  email: string;
+  telephone: string;
+}
+
+const associations: Association[] = [];
+
+try {
+  const dir = join(process.cwd(), "src/content/associations");
+  const fichiers = readdirSync(dir).filter(f => f.endsWith(".md"));
+
+  for (const fichier of fichiers) {
+    const raw = readFileSync(join(dir, fichier), "utf-8");
+    const nom         = raw.match(/nom:\s*"([^"]+)"/)?.[1] ?? "";
+    const description = raw.match(/description:\s*"([^"]+)"/)?.[1] ?? "";
+    const email       = raw.match(/email:\s*"([^"]+)"/)?.[1] ?? "";
+    const telephone   = raw.match(/telephone:\s*"([^"]+)"/)?.[1] ?? "";
+    if (nom) associations.push({ nom, description, email, telephone });
+  }
+
+  associations.sort((a, b) => a.nom.localeCompare(b.nom));
+} catch {}
+---
+
+{associations.length === 0 ? (
+  <p class="vide">Aucune association référencée pour le moment.</p>
+) : (
+  <ul class="liste-cartes" role="list">
+    {associations.map(a => (
+      <li class="carte">
+        <strong>{a.nom}</strong>
+        <p>{a.description}</p>
+        {a.email && <a href={`mailto:${a.email}`}>Contacter</a>}
+      </li>
+    ))}
+  </ul>
+)}
+
+<style>
+  .liste-cartes {
+    list-style: none;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+    gap: 1rem;
+  }
+  .carte {
+    background: var(--gris-f);
+    border-top: 3px solid var(--bleu);
+    border-radius: 0 0 4px 4px;
+    padding: 1rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+  }
+  .carte strong { color: var(--bleu); font-weight: 600; }
+  .carte p { font-size: 0.875rem; color: var(--gris-t); }
+  .carte a {
+    color: var(--bleu);
+    font-size: 0.875rem;
+    font-weight: 600;
+    text-decoration: none;
+    margin-top: auto;
+  }
+  .carte a:hover { text-decoration: underline; }
+  .vide { color: var(--gris-t); font-style: italic; }
+</style>

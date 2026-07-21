@@ -2,25 +2,26 @@
 import CharteRepublicaine from "../../layouts/CharteRepublicaine.astro";
 import Nav from "../../components/Nav.astro";
 import Footer from "../../components/Footer.astro";
+import { commune } from "../../lib/config";
 
 const dateAudit = "2026-07-21";
 ---
 
-<CharteRepublicaine title="Accessibilité — NOM_COMMUNE">
+<CharteRepublicaine title={`Accessibilité — ${commune.nom_commune}`}>
   <Nav slot="nav" />
 
   <div class="conteneur">
     <h1>Déclaration d'accessibilité</h1>
 
     <p class="intro">
-      La commune de NOM_COMMUNE s'engage à rendre son site internet accessible
+      La commune de {commune.nom_commune} s'engage à rendre son site internet accessible
       conformément à l'article 47 de la loi n°2005-102 du 11 février 2005.
     </p>
 
     <section aria-labelledby="titre-conformite">
       <h2 id="titre-conformite">État de conformité</h2>
       <p>
-        Le site <strong>NOM_DOMAINE</strong> est en <strong>conformité partielle</strong>
+        Le site <strong>{commune.nom_domaine}</strong> est en <strong>conformité partielle</strong>
         avec le référentiel général d'amélioration de l'accessibilité (RGAA 4.1)
         en raison des non-conformités listées ci-dessous.
       </p>
@@ -43,8 +44,8 @@ const dateAudit = "2026-07-21";
         à un contenu ou à une fonctionnalité, contactez-nous :
       </p>
       <ul class="liste">
-        <li>Par email : <a href="mailto:EMAIL_COMMUNE">EMAIL_COMMUNE</a></li>
-        <li>Par téléphone : <a href="tel:TELEPHONE">TELEPHONE</a></li>
+        <li>Par email : <a href={`mailto:${commune.email}`}>{commune.email}</a></li>
+        <li>Par téléphone : <a href={`tel:${commune.telephone.replace(/\s/g, "")}`}>{commune.telephone}</a></li>
       </ul>
     </section>
 

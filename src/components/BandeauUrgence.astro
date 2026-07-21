@@ -1,0 +1,57 @@
+---
+import { readFileSync } from "fs";
+import { join } from "path";
+
+let urgence = { actif: false, niveau: "jaune", texte: "" };
+
+try {
+  const raw = readFileSync(join(process.cwd(), "src/content/urgence.md"), "utf-8");
+  const actif    = /actif:\s*true/.test(raw);
+  const niveau   = raw.match(/niveau:\s*(\w+)/)?.[1] ?? "jaune";
+  const texte    = raw.match(/texte:\s*"([^"]+)"/)?.[1] ?? "";
+  urgence = { actif, niveau, texte };
+} catch {}
+
+const couleurs: Record<string, { bg: string; border: string; texte: string; label: string }> = {
+  jaune:  { bg: "#FEF7CD", border: "#F5A623", texte: "#7D4E00", label: "Avis"    },
+  orange: { bg: "#FDEBD0", border: "#E67E22", texte: "#7D3000", label: "Alerte"  },
+  rouge:  { bg: "#FDEDEC", border: "#E1000F", texte: "#7D0000", label: "Urgence" },
+};
+
+const c = couleurs[urgence.niveau] ?? couleurs.jaune;
+---
+
+{urgence.actif && (
+  <div
+    role="alert"
+    aria-live="polite"
+    style={`background:${c.bg}; border-left: 6px solid ${c.border}; color:${c.texte};`}
+    class="bandeau-urgence"
+  >
+    <span class="niveau-label" style={`background:${c.border}; color:#fff;`}>
+      {c.label}
+    </span>
+    <p>{urgence.texte}</p>
+  </div>
+)}
+
+<style>
+  .bandeau-urgence {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: 0.875rem 1.5rem;
+    font-weight: 500;
+    font-size: 1rem;
+  }
+  .niveau-label {
+    flex-shrink: 0;
+    font-size: 0.75rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    padding: 0.2rem 0.6rem;
+    border-radius: 3px;
+  }
+  p { margin: 0; }
+</style>

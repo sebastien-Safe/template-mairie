@@ -1,9 +1,11 @@
 ---
+import { commune } from "../lib/config";
+
 const liens = [
-  { href: "/",           label: "Accueil" },
-  { href: "/mairie",     label: "La mairie" },
-  { href: "/demarches",  label: "Démarches" },
-  { href: "/vie-locale", label: "Vie locale" },
+  { href: "/",            label: "Accueil" },
+  { href: "/mairie/",     label: "La mairie" },
+  { href: "/demarches/",  label: "Démarches" },
+  { href: "/vie-locale/", label: "Vie locale" },
 ];
 
 const pathname = Astro.url.pathname;
@@ -11,7 +13,7 @@ const pathname = Astro.url.pathname;
 
 <header role="banner">
   <div class="barre-top">
-    <span class="nom-commune">NOM_COMMUNE</span>
+    <span class="nom-commune">{commune.nom_commune}</span>
   </div>
   <nav aria-label="Navigation principale">
     <ul role="list">

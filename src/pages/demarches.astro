@@ -3,6 +3,7 @@ import CharteRepublicaine from "../layouts/CharteRepublicaine.astro";
 import Nav from "../components/Nav.astro";
 import Footer from "../components/Footer.astro";
 import BandeauUrgence from "../components/BandeauUrgence.astro";
+import { commune } from "../lib/config";
 
 const demarches = [
   { titre: "Carte nationale d'identite", description: "Demande, renouvellement, perte ou vol.", url: "https://www.service-public.fr/particuliers/vosdroits/N358", source: "Service-Public.fr" },
@@ -16,15 +17,15 @@ const demarches = [
 ];
 ---
 
-<CharteRepublicaine title="Demarches administratives — NOM_COMMUNE">
+<CharteRepublicaine title={`Démarches administratives — ${commune.nom_commune}`}>
   <BandeauUrgence slot="bandeau-urgence" />
   <Nav slot="nav" />
 
   <div class="conteneur">
-    <h1>Demarches administratives</h1>
+    <h1>Démarches administratives</h1>
 
     <div class="notice" role="note">
-      <p>Pour proteger vos donnees personnelles, la mairie de NOM_COMMUNE vous redirige vers les sites officiels de l'Etat pour toutes vos demarches en ligne.</p>
+      <p>Pour protéger vos données personnelles, la mairie de {commune.nom_commune} vous redirige vers les sites officiels de l'État pour toutes vos démarches en ligne.</p>
     </div>
 
     <ul class="liste-demarches" role="list">

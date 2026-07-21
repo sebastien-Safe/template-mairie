@@ -2,9 +2,10 @@
 import CharteRepublicaine from "../../layouts/CharteRepublicaine.astro";
 import Nav from "../../components/Nav.astro";
 import Footer from "../../components/Footer.astro";
+import { commune } from "../../lib/config";
 ---
 
-<CharteRepublicaine title="Mentions légales — NOM_COMMUNE">
+<CharteRepublicaine title={`Mentions légales — ${commune.nom_commune}`}>
   <Nav slot="nav" />
 
   <div class="conteneur">
@@ -13,12 +14,12 @@ import Footer from "../../components/Footer.astro";
     <section aria-labelledby="titre-editeur">
       <h2 id="titre-editeur">Éditeur du site</h2>
       <dl class="infos">
-        <div><dt>Commune</dt><dd>NOM_COMMUNE</dd></div>
-        <div><dt>SIREN</dt><dd>SIREN_COMMUNE</dd></div>
-        <div><dt>Adresse</dt><dd>ADRESSE_COMMUNE</dd></div>
-        <div><dt>Téléphone</dt><dd>TELEPHONE</dd></div>
-        <div><dt>Email</dt><dd><a href="mailto:EMAIL_COMMUNE">EMAIL_COMMUNE</a></dd></div>
-        <div><dt>Directeur de publication</dt><dd>NOM_MAIRE, Maire</dd></div>
+        <div><dt>Commune</dt><dd>{commune.nom_commune}</dd></div>
+        <div><dt>SIREN</dt><dd>{commune.siren}</dd></div>
+        <div><dt>Adresse</dt><dd>{commune.adresse}</dd></div>
+        <div><dt>Téléphone</dt><dd>{commune.telephone}</dd></div>
+        <div><dt>Email</dt><dd><a href={`mailto:${commune.email}`}>{commune.email}</a></dd></div>
+        <div><dt>Directeur de publication</dt><dd>{commune.nom_maire}, Maire</dd></div>
       </dl>
     </section>
 
@@ -45,7 +46,7 @@ import Footer from "../../components/Footer.astro";
       <h2 id="titre-propriete">Propriété intellectuelle</h2>
       <p>
         L'ensemble du contenu de ce site (textes, images, documents) est la propriété
-        de la commune de NOM_COMMUNE, sauf mention contraire.
+        de la commune de {commune.nom_commune}, sauf mention contraire.
         Toute reproduction est soumise à autorisation préalable.
       </p>
     </section>

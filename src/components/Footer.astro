@@ -1,0 +1,76 @@
+---
+import { commune } from "../lib/config";
+
+const annee = new Date().getFullYear();
+---
+
+<footer role="contentinfo">
+  <div class="footer-inner">
+    <div class="bloc-rf">
+      <img src="/marianne.svg" alt="République Française" width="40" height="28" />
+      <span>{commune.nom_commune}</span>
+    </div>
+
+    <nav aria-label="Liens légaux">
+      <ul role="list">
+        <li><a href="/legal/mentions/">Mentions légales</a></li>
+        <li><a href="/legal/rgpd/">Données personnelles</a></li>
+        <li><a href="/legal/accessibilite/">Accessibilité</a></li>
+      </ul>
+    </nav>
+
+    <p class="credit">
+      © {annee} Commune de {commune.nom_commune} —
+      Site réalisé par <a href="https://safe-digitalisation.fr" target="_blank" rel="noopener">S@FE</a>
+    </p>
+  </div>
+</footer>
+
+<style>
+  footer {
+    background: var(--bleu);
+    color: var(--blanc);
+    margin-top: auto;
+    padding: 2rem 1.5rem;
+  }
+  .footer-inner {
+    max-width: 1100px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+  }
+  .bloc-rf {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    font-weight: 700;
+    font-size: 1rem;
+  }
+  nav ul {
+    list-style: none;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem 1.5rem;
+  }
+  nav a {
+    color: var(--blanc);
+    text-decoration: underline;
+    font-size: 0.875rem;
+  }
+  nav a:hover { opacity: 0.8; }
+  .credit {
+    font-size: 0.8rem;
+    opacity: 0.75;
+  }
+  .credit a {
+    color: var(--blanc);
+  }
+  @media (min-width: 768px) {
+    .footer-inner {
+      flex-direction: row;
+      align-items: center;
+      justify-content: space-between;
+    }
+  }
+</style>

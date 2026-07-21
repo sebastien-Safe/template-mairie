@@ -2,9 +2,10 @@
 import CharteRepublicaine from "../../layouts/CharteRepublicaine.astro";
 import Nav from "../../components/Nav.astro";
 import Footer from "../../components/Footer.astro";
+import { commune } from "../../lib/config";
 ---
 
-<CharteRepublicaine title="Données personnelles — NOM_COMMUNE">
+<CharteRepublicaine title={`Données personnelles — ${commune.nom_commune}`}>
   <Nav slot="nav" />
 
   <div class="conteneur">
@@ -13,8 +14,8 @@ import Footer from "../../components/Footer.astro";
     <section aria-labelledby="titre-rt">
       <h2 id="titre-rt">Responsable de traitement</h2>
       <p>
-        La commune de NOM_COMMUNE (SIREN : SIREN_COMMUNE), représentée par
-        NOM_MAIRE en qualité de Maire, est responsable de traitement au sens
+        La commune de {commune.nom_commune} (SIREN : {commune.siren}), représentée par
+        {commune.nom_maire} en qualité de Maire, est responsable de traitement au sens
         du Règlement Général sur la Protection des Données (RGPD).
       </p>
     </section>

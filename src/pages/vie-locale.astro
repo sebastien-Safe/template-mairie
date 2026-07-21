@@ -3,9 +3,11 @@ import CharteRepublicaine from "../layouts/CharteRepublicaine.astro";
 import Nav from "../components/Nav.astro";
 import Footer from "../components/Footer.astro";
 import BandeauUrgence from "../components/BandeauUrgence.astro";
+import Associations from "../components/Associations.astro";
+import { commune } from "../lib/config";
 ---
 
-<CharteRepublicaine title="Vie locale — NOM_COMMUNE">
+<CharteRepublicaine title={`Vie locale — ${commune.nom_commune}`}>
   <BandeauUrgence slot="bandeau-urgence" />
   <Nav slot="nav" />
 
@@ -17,19 +19,19 @@ import BandeauUrgence from "../components/BandeauUrgence.astro";
       <dl class="infos">
         <div>
           <dt>École primaire</dt>
-          <dd>NOM_ECOLE — ADRESSE_ECOLE</dd>
+          <dd>École des Tilleuls — 4 rue des Écoles, 01330 Saint-Marcel-en-Dombes</dd>
         </div>
         <div>
           <dt>Directeur(trice)</dt>
-          <dd>NOM_DIRECTEUR</dd>
+          <dd>Sophie Martin</dd>
         </div>
         <div>
           <dt>Téléphone</dt>
-          <dd><a href="tel:TEL_ECOLE">TEL_ECOLE</a></dd>
+          <dd><a href="tel:0474981245">04 74 98 12 45</a></dd>
         </div>
         <div>
           <dt>Cantine</dt>
-          <dd>INFOS_CANTINE</dd>
+          <dd>Inscription en mairie, repas préparés sur place, régimes spécifiques sur demande.</dd>
         </div>
       </dl>
     </section>
@@ -38,24 +40,23 @@ import BandeauUrgence from "../components/BandeauUrgence.astro";
       <h2 id="titre-associations">Associations</h2>
       <p class="intro">
         Vous souhaitez faire référencer votre association ?
-        Contactez la mairie à <a href="mailto:EMAIL_COMMUNE">EMAIL_COMMUNE</a>.
+        Contactez la mairie à <a href={`mailto:${commune.email}`}>{commune.email}</a>.
       </p>
-      <ul class="liste-cartes" role="list">
-        <li class="carte">
-          <strong>NOM_ASSOCIATION</strong>
-          <p>DESCRIPTION_ASSOCIATION</p>
-          <a href="mailto:EMAIL_ASSOCIATION">Contacter</a>
-        </li>
-      </ul>
+      <Associations />
     </section>
 
     <section aria-labelledby="titre-commerces">
       <h2 id="titre-commerces">Commerces et services</h2>
       <ul class="liste-cartes" role="list">
         <li class="carte">
-          <strong>NOM_COMMERCE</strong>
-          <p>TYPE_COMMERCE</p>
-          <a href="tel:TEL_COMMERCE">TEL_COMMERCE</a>
+          <strong>Boulangerie Au Bon Pain</strong>
+          <p>Boulangerie-pâtisserie</p>
+          <a href="tel:0474981567">04 74 98 15 67</a>
+        </li>
+        <li class="carte">
+          <strong>Épicerie de la Place</strong>
+          <p>Épicerie de proximité</p>
+          <a href="tel:0474981823">04 74 98 18 23</a>
         </li>
       </ul>
     </section>
@@ -65,15 +66,15 @@ import BandeauUrgence from "../components/BandeauUrgence.astro";
       <dl class="collecte">
         <div>
           <dt>Ordures ménagères</dt>
-          <dd>JOUR_OM</dd>
+          <dd>Mardi matin</dd>
         </div>
         <div>
           <dt>Tri sélectif</dt>
-          <dd>JOUR_TRI</dd>
+          <dd>Vendredi matin</dd>
         </div>
         <div>
           <dt>Déchetterie</dt>
-          <dd>INFOS_DECHETTERIE</dd>
+          <dd>Route de Dombes — Lundi, mercredi, samedi 9h-12h et 14h-17h</dd>
         </div>
       </dl>
     </section>

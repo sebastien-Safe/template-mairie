@@ -5,15 +5,16 @@ import Footer from "../components/Footer.astro";
 import BandeauUrgence from "../components/BandeauUrgence.astro";
 import Horaires from "../components/Horaires.astro";
 import Actus from "../components/Actus.astro";
+import { commune } from "../lib/config";
 ---
 
-<CharteRepublicaine title="Accueil — NOM_COMMUNE">
+<CharteRepublicaine title={`Accueil — ${commune.nom_commune}`}>
   <BandeauUrgence slot="bandeau-urgence" />
   <Nav slot="nav" />
 
   <section class="hero">
     <div class="hero-inner">
-      <h1>Bienvenue à NOM_COMMUNE</h1>
+      <h1>Bienvenue à {commune.nom_commune}</h1>
       <p class="accroche">Site officiel de la mairie</p>
     </div>
   </section>
@@ -32,10 +33,10 @@ import Actus from "../components/Actus.astro";
     <section class="bloc-contact" aria-labelledby="titre-contact">
       <h2 id="titre-contact">Nous contacter</h2>
       <address>
-        <p>Mairie de NOM_COMMUNE</p>
-        <p>ADRESSE_COMMUNE</p>
-        <p><a href="tel:TELEPHONE">TELEPHONE</a></p>
-        <p><a href="mailto:EMAIL_COMMUNE">EMAIL_COMMUNE</a></p>
+        <p>Mairie de {commune.nom_commune}</p>
+        <p>{commune.adresse}</p>
+        <p><a href={`tel:${commune.telephone.replace(/\s/g, "")}`}>{commune.telephone}</a></p>
+        <p><a href={`mailto:${commune.email}`}>{commune.email}</a></p>
       </address>
     </section>
   </div>
