@@ -1,0 +1,119 @@
+---
+import CharteRepublicaine from "../../layouts/CharteRepublicaine.astro";
+import Nav from "../../components/Nav.astro";
+import Footer from "../../components/Footer.astro";
+---
+
+<CharteRepublicaine title="Données personnelles — NOM_COMMUNE">
+  <Nav slot="nav" />
+
+  <div class="conteneur">
+    <h1>Données personnelles</h1>
+
+    <section aria-labelledby="titre-rt">
+      <h2 id="titre-rt">Responsable de traitement</h2>
+      <p>
+        La commune de NOM_COMMUNE (SIREN : SIREN_COMMUNE), représentée par
+        NOM_MAIRE en qualité de Maire, est responsable de traitement au sens
+        du Règlement Général sur la Protection des Données (RGPD).
+      </p>
+    </section>
+
+    <section aria-labelledby="titre-dpo">
+      <h2 id="titre-dpo">Délégué à la Protection des Données (DPO)</h2>
+      <dl class="infos">
+        <div><dt>Société</dt><dd>S@FE SASU</dd></div>
+        <div><dt>Email</dt><dd><a href="mailto:dpo@safe-digitalisation.fr">dpo@safe-digitalisation.fr</a></dd></div>
+      </dl>
+    </section>
+
+    <section aria-labelledby="titre-traitements">
+      <h2 id="titre-traitements">Traitements effectués</h2>
+      <div class="traitement">
+        <h3>Formulaire de contact</h3>
+        <dl class="infos">
+          <div><dt>Finalité</dt><dd>Répondre aux demandes des administrés</dd></div>
+          <div><dt>Données collectées</dt><dd>Prénom, email, message</dd></div>
+          <div><dt>Base légale</dt><dd>Mission d'intérêt public (art. 6.1.e RGPD)</dd></div>
+          <div><dt>Durée de conservation</dt><dd>1 mois après traitement de la demande</dd></div>
+          <div><dt>Destinataires</dt><dd>Secrétariat de mairie uniquement</dd></div>
+          <div><dt>Transfert hors UE</dt><dd>Aucun</dd></div>
+        </dl>
+      </div>
+    </section>
+
+    <section aria-labelledby="titre-droits">
+      <h2 id="titre-droits">Vos droits</h2>
+      <p>
+        Conformément au RGPD, vous disposez d'un droit d'accès, de rectification,
+        d'effacement, de limitation et d'opposition au traitement de vos données.
+        Pour exercer ces droits, contactez le DPO à l'adresse ci-dessus.
+        En cas de litige, vous pouvez saisir la CNIL à l'adresse
+        <a href="https://www.cnil.fr" target="_blank" rel="noopener">cnil.fr</a>.
+      </p>
+    </section>
+
+    <section aria-labelledby="titre-cookies">
+      <h2 id="titre-cookies">Cookies et traceurs</h2>
+      <p>
+        Ce site n'utilise aucun cookie publicitaire ni traceur de navigation.
+        L'outil de mesure d'audience utilisé (Umami) est configuré sans cookie
+        et ne collecte aucune donnée personnelle identifiable.
+        Aucun bandeau de consentement n'est donc nécessaire.
+      </p>
+    </section>
+  </div>
+
+  <Footer slot="footer" />
+</CharteRepublicaine>
+
+<style>
+  .conteneur {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 2rem 1.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+  }
+  h1 {
+    font-size: clamp(1.5rem, 3vw, 2rem);
+    font-weight: 700;
+    color: var(--bleu);
+    border-left: 5px solid var(--rouge);
+    padding-left: 1rem;
+  }
+  h2 {
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: var(--bleu);
+    border-bottom: 2px solid var(--bleu);
+    padding-bottom: 0.4rem;
+    margin-bottom: 1rem;
+  }
+  h3 {
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--texte);
+    margin-bottom: 0.75rem;
+  }
+  .traitement {
+    background: var(--gris-f);
+    padding: 1.25rem;
+    border-radius: 4px;
+    border-left: 4px solid var(--bleu);
+  }
+  .infos { display: flex; flex-direction: column; gap: 0.4rem; }
+  .infos div {
+    display: flex;
+    gap: 1rem;
+    padding: 0.4rem 0;
+    border-bottom: 1px solid #e5e5e5;
+    font-size: 0.875rem;
+  }
+  .infos dt { font-weight: 600; min-width: 200px; flex-shrink: 0; }
+  .infos dd { color: var(--gris-t); }
+  .infos a { color: var(--bleu); }
+  p { font-size: 0.9rem; line-height: 1.7; color: var(--gris-t); }
+  p a { color: var(--bleu); }
+</style>

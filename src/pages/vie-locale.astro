@@ -1,0 +1,160 @@
+---
+import CharteRepublicaine from "../layouts/CharteRepublicaine.astro";
+import Nav from "../components/Nav.astro";
+import Footer from "../components/Footer.astro";
+import BandeauUrgence from "../components/BandeauUrgence.astro";
+---
+
+<CharteRepublicaine title="Vie locale — NOM_COMMUNE">
+  <BandeauUrgence slot="bandeau-urgence" />
+  <Nav slot="nav" />
+
+  <div class="conteneur">
+    <h1>Vie locale</h1>
+
+    <section aria-labelledby="titre-ecoles">
+      <h2 id="titre-ecoles">Écoles et cantine</h2>
+      <dl class="infos">
+        <div>
+          <dt>École primaire</dt>
+          <dd>NOM_ECOLE — ADRESSE_ECOLE</dd>
+        </div>
+        <div>
+          <dt>Directeur(trice)</dt>
+          <dd>NOM_DIRECTEUR</dd>
+        </div>
+        <div>
+          <dt>Téléphone</dt>
+          <dd><a href="tel:TEL_ECOLE">TEL_ECOLE</a></dd>
+        </div>
+        <div>
+          <dt>Cantine</dt>
+          <dd>INFOS_CANTINE</dd>
+        </div>
+      </dl>
+    </section>
+
+    <section aria-labelledby="titre-associations">
+      <h2 id="titre-associations">Associations</h2>
+      <p class="intro">
+        Vous souhaitez faire référencer votre association ?
+        Contactez la mairie à <a href="mailto:EMAIL_COMMUNE">EMAIL_COMMUNE</a>.
+      </p>
+      <ul class="liste-cartes" role="list">
+        <li class="carte">
+          <strong>NOM_ASSOCIATION</strong>
+          <p>DESCRIPTION_ASSOCIATION</p>
+          <a href="mailto:EMAIL_ASSOCIATION">Contacter</a>
+        </li>
+      </ul>
+    </section>
+
+    <section aria-labelledby="titre-commerces">
+      <h2 id="titre-commerces">Commerces et services</h2>
+      <ul class="liste-cartes" role="list">
+        <li class="carte">
+          <strong>NOM_COMMERCE</strong>
+          <p>TYPE_COMMERCE</p>
+          <a href="tel:TEL_COMMERCE">TEL_COMMERCE</a>
+        </li>
+      </ul>
+    </section>
+
+    <section aria-labelledby="titre-dechets">
+      <h2 id="titre-dechets">Collecte des déchets</h2>
+      <dl class="collecte">
+        <div>
+          <dt>Ordures ménagères</dt>
+          <dd>JOUR_OM</dd>
+        </div>
+        <div>
+          <dt>Tri sélectif</dt>
+          <dd>JOUR_TRI</dd>
+        </div>
+        <div>
+          <dt>Déchetterie</dt>
+          <dd>INFOS_DECHETTERIE</dd>
+        </div>
+      </dl>
+    </section>
+  </div>
+
+  <Footer slot="footer" />
+</CharteRepublicaine>
+
+<style>
+  .conteneur {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 2rem 1.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 2.5rem;
+  }
+  h1 {
+    font-size: clamp(1.5rem, 3vw, 2rem);
+    font-weight: 700;
+    color: var(--bleu);
+    border-left: 5px solid var(--rouge);
+    padding-left: 1rem;
+  }
+  h2 {
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: var(--bleu);
+    border-bottom: 2px solid var(--bleu);
+    padding-bottom: 0.5rem;
+    margin-bottom: 1.25rem;
+  }
+  .intro {
+    font-size: 0.9rem;
+    color: var(--gris-t);
+    margin-bottom: 1rem;
+  }
+  .intro a { color: var(--bleu); }
+  .infos, .collecte {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+  .infos div, .collecte div {
+    display: flex;
+    gap: 1rem;
+    padding: 0.5rem 0;
+    border-bottom: 1px solid var(--gris-f);
+    font-size: 0.9rem;
+  }
+  .infos dt, .collecte dt {
+    font-weight: 600;
+    min-width: 160px;
+    flex-shrink: 0;
+    color: var(--texte);
+  }
+  .infos dd, .collecte dd { color: var(--gris-t); }
+  .infos a, .collecte a { color: var(--bleu); }
+  .liste-cartes {
+    list-style: none;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+    gap: 1rem;
+  }
+  .carte {
+    background: var(--gris-f);
+    border-top: 3px solid var(--bleu);
+    border-radius: 0 0 4px 4px;
+    padding: 1rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+  }
+  .carte strong { color: var(--bleu); font-weight: 600; }
+  .carte p { font-size: 0.875rem; color: var(--gris-t); }
+  .carte a {
+    color: var(--bleu);
+    font-size: 0.875rem;
+    font-weight: 600;
+    text-decoration: none;
+    margin-top: auto;
+  }
+  .carte a:hover { text-decoration: underline; }
+</style>

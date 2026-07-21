@@ -1,0 +1,125 @@
+---
+import CharteRepublicaine from "../layouts/CharteRepublicaine.astro";
+import Nav from "../components/Nav.astro";
+import Footer from "../components/Footer.astro";
+import BandeauUrgence from "../components/BandeauUrgence.astro";
+---
+
+<CharteRepublicaine title="La mairie — NOM_COMMUNE">
+  <BandeauUrgence slot="bandeau-urgence" />
+  <Nav slot="nav" />
+
+  <div class="conteneur">
+    <h1>La mairie</h1>
+
+    <section aria-labelledby="titre-conseil">
+      <h2 id="titre-conseil">Le conseil municipal</h2>
+      <dl class="equipe">
+        <div class="membre">
+          <dt>Maire</dt>
+          <dd>NOM_MAIRE</dd>
+        </div>
+        <div class="membre">
+          <dt>1er adjoint</dt>
+          <dd>NOM_ADJOINT_1</dd>
+        </div>
+        <div class="membre">
+          <dt>2e adjoint</dt>
+          <dd>NOM_ADJOINT_2</dd>
+        </div>
+      </dl>
+    </section>
+
+    <section aria-labelledby="titre-pv">
+      <h2 id="titre-pv">Comptes-rendus et procès-verbaux</h2>
+      <p class="intro">
+        Les comptes-rendus des séances du conseil municipal sont disponibles
+        en téléchargement ci-dessous.
+      </p>
+      <ul class="documents" role="list">
+        <li>
+          <a href="/docs/cr-2026-06.pdf" class="doc-lien">
+            <span class="doc-icone" aria-hidden="true">📄</span>
+            <span>
+              <strong>Compte-rendu — Juin 2026</strong>
+              <small>PDF — Conseil municipal du 15 juin 2026</small>
+            </span>
+          </a>
+        </li>
+      </ul>
+    </section>
+  </div>
+
+  <Footer slot="footer" />
+</CharteRepublicaine>
+
+<style>
+  .conteneur {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 2rem 1.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 2.5rem;
+  }
+  h1 {
+    font-size: clamp(1.5rem, 3vw, 2rem);
+    font-weight: 700;
+    color: var(--bleu);
+    border-left: 5px solid var(--rouge);
+    padding-left: 1rem;
+  }
+  h2 {
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: var(--bleu);
+    border-bottom: 2px solid var(--bleu);
+    padding-bottom: 0.5rem;
+    margin-bottom: 1.25rem;
+  }
+  .equipe {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 1rem;
+  }
+  .membre {
+    background: var(--gris-f);
+    padding: 1rem;
+    border-radius: 4px;
+    border-top: 3px solid var(--bleu);
+  }
+  .membre dt {
+    font-size: 0.78rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: var(--gris-t);
+    margin-bottom: 0.35rem;
+  }
+  .membre dd {
+    font-weight: 600;
+    color: var(--texte);
+  }
+  .intro {
+    color: var(--gris-t);
+    margin-bottom: 1rem;
+    font-size: 0.95rem;
+  }
+  .documents { list-style: none; display: flex; flex-direction: column; gap: 0.75rem; }
+  .doc-lien {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: 0.875rem 1rem;
+    background: var(--gris-f);
+    border-radius: 4px;
+    text-decoration: none;
+    color: var(--texte);
+    border-left: 4px solid var(--bleu);
+    transition: background 0.15s;
+  }
+  .doc-lien:hover { background: #e8edf5; }
+  .doc-lien strong { display: block; color: var(--bleu); font-weight: 600; }
+  .doc-lien small { color: var(--gris-t); font-size: 0.8rem; }
+  .doc-icone { font-size: 1.5rem; flex-shrink: 0; }
+</style>

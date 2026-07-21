@@ -1,0 +1,165 @@
+---
+import CharteRepublicaine from "../layouts/CharteRepublicaine.astro";
+import Nav from "../components/Nav.astro";
+import Footer from "../components/Footer.astro";
+import BandeauUrgence from "../components/BandeauUrgence.astro";
+
+const demarches = [
+  {
+    titre: "Carte nationale d'identité",
+    description: "Demande, renouvellement, perte ou vol.",
+    url: "https://www.service-public.fr/particuliers/vosdroits/N358",
+    source: "Service-Public.fr",
+  },
+  {
+    titre: "Passeport",
+    description: "Demande et renouvellement de passeport biométrique.",
+    url: "https://www.service-public.fr/particuliers/vosdroits/N360",
+    source: "Service-Public.fr",
+  },
+  {
+    titre: "Permis de conduire",
+    description: "Inscription au permis, duplicata, points.",
+    url: "https://www.ants.gouv.fr/",
+    source: "ANTS",
+  },
+  {
+    titre: "Carte grise (certificat d'immatriculation)",
+    description: "Demande de certificat d'immatriculation pour un véhicule.",
+    url: "https://www.ants.gouv.fr/",
+    source: "ANTS",
+  },
+  {
+    titre: "Acte de naissance, mariage, décès",
+    description: "Demande d'actes d'état civil en ligne.",
+    url: "https://www.service-public.fr/particuliers/vosdroits/N359",
+    source: "Service-Public.fr",
+  },
+  {
+    titre: "Inscription sur les listes électorales",
+    description: "Vérifier son inscription ou s'inscrire en ligne.",
+    url: "https://www.service-public.fr/particuliers/vosdroits/R45333",
+    source: "Service-Public.fr",
+  },
+  {
+    titre: "Recensement citoyen",
+    description: "Obligation de recensement à 16 ans.",
+    url: "https://www.service-public.fr/particuliers/vosdroits/F870",
+    source: "Service-Public.fr",
+  },
+  {
+    titre: "Aide sociale et allocations",
+    description: "CAF, aides au logement, RSA, AAH.",
+    url: "https://www.caf.fr/",
+    source: "CAF",
+  },
+];
+---
+
+<CharteRepublicaine title="Démarches administratives — NOM_COMMUNE">
+  <BandeauUrgence slot="bandeau-urgence" />
+  <Nav slot="nav" />
+
+  <div class="conteneur">
+    <h1>Démarches administratives</h1>
+
+    <div class="notice" role="note">
+      <p>
+        Pour protéger vos données personnelles, la mairie de NOM_COMMUNE
+        vous redirige vers les sites officiels de l'État pour toutes vos
+        démarches en ligne.
+      </p>
+    </div>
+
+    <ul class="liste-demarches" role="list">
+      {demarches.map(({ titre, description, url, source }) => (
+        <li>
+          
+            href={url}
+            target="_blank"
+            rel="noopener noreferrer"
+            class="demarche-carte"
+          >
+            <div class="demarche-contenu">
+              <strong>{titre}</strong>
+              <p>{description}</p>
+            </div>
+            <span class="badge">{source}</span>
+          </a>
+        </li>
+      ))}
+    </ul>
+  </div>
+
+  <Footer slot="footer" />
+</CharteRepublicaine>
+
+<style>
+  .conteneur {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 2rem 1.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+  }
+  h1 {
+    font-size: clamp(1.5rem, 3vw, 2rem);
+    font-weight: 700;
+    color: var(--bleu);
+    border-left: 5px solid var(--rouge);
+    padding-left: 1rem;
+  }
+  .notice {
+    background: #EEF2FF;
+    border-left: 4px solid var(--bleu);
+    padding: 1rem 1.25rem;
+    border-radius: 0 4px 4px 0;
+    font-size: 0.9rem;
+    color: var(--texte);
+  }
+  .liste-demarches {
+    list-style: none;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 1rem;
+  }
+  .demarche-carte {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 1rem;
+    padding: 1rem 1.25rem;
+    background: var(--gris-f);
+    border-radius: 4px;
+    border-left: 4px solid var(--bleu);
+    text-decoration: none;
+    color: var(--texte);
+    height: 100%;
+    transition: background 0.15s;
+  }
+  .demarche-carte:hover { background: #e8edf5; }
+  .demarche-contenu strong {
+    display: block;
+    color: var(--bleu);
+    font-weight: 600;
+    margin-bottom: 0.35rem;
+  }
+  .demarche-contenu p {
+    font-size: 0.875rem;
+    color: var(--gris-t);
+    line-height: 1.5;
+  }
+  .badge {
+    flex-shrink: 0;
+    font-size: 0.7rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    background: var(--bleu);
+    color: var(--blanc);
+    padding: 0.2rem 0.5rem;
+    border-radius: 3px;
+    white-space: nowrap;
+  }
+</style>

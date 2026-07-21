@@ -1,0 +1,93 @@
+---
+import CharteRepublicaine from "../../layouts/CharteRepublicaine.astro";
+import Nav from "../../components/Nav.astro";
+import Footer from "../../components/Footer.astro";
+---
+
+<CharteRepublicaine title="Mentions légales — NOM_COMMUNE">
+  <Nav slot="nav" />
+
+  <div class="conteneur">
+    <h1>Mentions légales</h1>
+
+    <section aria-labelledby="titre-editeur">
+      <h2 id="titre-editeur">Éditeur du site</h2>
+      <dl class="infos">
+        <div><dt>Commune</dt><dd>NOM_COMMUNE</dd></div>
+        <div><dt>SIREN</dt><dd>SIREN_COMMUNE</dd></div>
+        <div><dt>Adresse</dt><dd>ADRESSE_COMMUNE</dd></div>
+        <div><dt>Téléphone</dt><dd>TELEPHONE</dd></div>
+        <div><dt>Email</dt><dd><a href="mailto:EMAIL_COMMUNE">EMAIL_COMMUNE</a></dd></div>
+        <div><dt>Directeur de publication</dt><dd>NOM_MAIRE, Maire</dd></div>
+      </dl>
+    </section>
+
+    <section aria-labelledby="titre-hebergeur">
+      <h2 id="titre-hebergeur">Hébergeur</h2>
+      <dl class="infos">
+        <div><dt>Société</dt><dd>Scaleway SAS</dd></div>
+        <div><dt>Adresse</dt><dd>8 rue de la Ville l'Évêque, 75008 Paris</dd></div>
+        <div><dt>Site</dt><dd><a href="https://www.scaleway.com" target="_blank" rel="noopener">scaleway.com</a></dd></div>
+      </dl>
+    </section>
+
+    <section aria-labelledby="titre-prestataire">
+      <h2 id="titre-prestataire">Prestataire technique</h2>
+      <dl class="infos">
+        <div><dt>Société</dt><dd>S@FE SASU</dd></div>
+        <div><dt>SIRET</dt><dd>104 699 558 00011</dd></div>
+        <div><dt>Adresse</dt><dd>66 av. des Champs-Élysées, 75008 Paris</dd></div>
+        <div><dt>Site</dt><dd><a href="https://safe-digitalisation.fr" target="_blank" rel="noopener">safe-digitalisation.fr</a></dd></div>
+      </dl>
+    </section>
+
+    <section aria-labelledby="titre-propriete">
+      <h2 id="titre-propriete">Propriété intellectuelle</h2>
+      <p>
+        L'ensemble du contenu de ce site (textes, images, documents) est la propriété
+        de la commune de NOM_COMMUNE, sauf mention contraire.
+        Toute reproduction est soumise à autorisation préalable.
+      </p>
+    </section>
+  </div>
+
+  <Footer slot="footer" />
+</CharteRepublicaine>
+
+<style>
+  .conteneur {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 2rem 1.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+  }
+  h1 {
+    font-size: clamp(1.5rem, 3vw, 2rem);
+    font-weight: 700;
+    color: var(--bleu);
+    border-left: 5px solid var(--rouge);
+    padding-left: 1rem;
+  }
+  h2 {
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: var(--bleu);
+    border-bottom: 2px solid var(--bleu);
+    padding-bottom: 0.4rem;
+    margin-bottom: 1rem;
+  }
+  .infos { display: flex; flex-direction: column; gap: 0.4rem; }
+  .infos div {
+    display: flex;
+    gap: 1rem;
+    padding: 0.4rem 0;
+    border-bottom: 1px solid var(--gris-f);
+    font-size: 0.9rem;
+  }
+  .infos dt { font-weight: 600; min-width: 200px; flex-shrink: 0; }
+  .infos dd { color: var(--gris-t); }
+  .infos a { color: var(--bleu); }
+  p { font-size: 0.9rem; line-height: 1.7; color: var(--gris-t); }
+</style>
