@@ -5,86 +5,37 @@ import Footer from "../components/Footer.astro";
 import BandeauUrgence from "../components/BandeauUrgence.astro";
 
 const demarches = [
-  {
-    titre: "Carte nationale d'identité",
-    description: "Demande, renouvellement, perte ou vol.",
-    url: "https://www.service-public.fr/particuliers/vosdroits/N358",
-    source: "Service-Public.fr",
-  },
-  {
-    titre: "Passeport",
-    description: "Demande et renouvellement de passeport biométrique.",
-    url: "https://www.service-public.fr/particuliers/vosdroits/N360",
-    source: "Service-Public.fr",
-  },
-  {
-    titre: "Permis de conduire",
-    description: "Inscription au permis, duplicata, points.",
-    url: "https://www.ants.gouv.fr/",
-    source: "ANTS",
-  },
-  {
-    titre: "Carte grise (certificat d'immatriculation)",
-    description: "Demande de certificat d'immatriculation pour un véhicule.",
-    url: "https://www.ants.gouv.fr/",
-    source: "ANTS",
-  },
-  {
-    titre: "Acte de naissance, mariage, décès",
-    description: "Demande d'actes d'état civil en ligne.",
-    url: "https://www.service-public.fr/particuliers/vosdroits/N359",
-    source: "Service-Public.fr",
-  },
-  {
-    titre: "Inscription sur les listes électorales",
-    description: "Vérifier son inscription ou s'inscrire en ligne.",
-    url: "https://www.service-public.fr/particuliers/vosdroits/R45333",
-    source: "Service-Public.fr",
-  },
-  {
-    titre: "Recensement citoyen",
-    description: "Obligation de recensement à 16 ans.",
-    url: "https://www.service-public.fr/particuliers/vosdroits/F870",
-    source: "Service-Public.fr",
-  },
-  {
-    titre: "Aide sociale et allocations",
-    description: "CAF, aides au logement, RSA, AAH.",
-    url: "https://www.caf.fr/",
-    source: "CAF",
-  },
+  { titre: "Carte nationale d'identite", description: "Demande, renouvellement, perte ou vol.", url: "https://www.service-public.fr/particuliers/vosdroits/N358", source: "Service-Public.fr" },
+  { titre: "Passeport", description: "Demande et renouvellement de passeport biometrique.", url: "https://www.service-public.fr/particuliers/vosdroits/N360", source: "Service-Public.fr" },
+  { titre: "Permis de conduire", description: "Inscription au permis, duplicata, points.", url: "https://www.ants.gouv.fr/", source: "ANTS" },
+  { titre: "Carte grise", description: "Certificat d'immatriculation pour un vehicule.", url: "https://www.ants.gouv.fr/", source: "ANTS" },
+  { titre: "Actes d'etat civil", description: "Naissance, mariage, deces en ligne.", url: "https://www.service-public.fr/particuliers/vosdroits/N359", source: "Service-Public.fr" },
+  { titre: "Listes electorales", description: "Verifier ou s'inscrire en ligne.", url: "https://www.service-public.fr/particuliers/vosdroits/R45333", source: "Service-Public.fr" },
+  { titre: "Recensement citoyen", description: "Obligation de recensement a 16 ans.", url: "https://www.service-public.fr/particuliers/vosdroits/F870", source: "Service-Public.fr" },
+  { titre: "Aide sociale et allocations", description: "CAF, aides au logement, RSA, AAH.", url: "https://www.caf.fr/", source: "CAF" },
 ];
 ---
 
-<CharteRepublicaine title="Démarches administratives — NOM_COMMUNE">
+<CharteRepublicaine title="Demarches administratives — NOM_COMMUNE">
   <BandeauUrgence slot="bandeau-urgence" />
   <Nav slot="nav" />
 
   <div class="conteneur">
-    <h1>Démarches administratives</h1>
+    <h1>Demarches administratives</h1>
 
     <div class="notice" role="note">
-      <p>
-        Pour protéger vos données personnelles, la mairie de NOM_COMMUNE
-        vous redirige vers les sites officiels de l'État pour toutes vos
-        démarches en ligne.
-      </p>
+      <p>Pour proteger vos donnees personnelles, la mairie de NOM_COMMUNE vous redirige vers les sites officiels de l'Etat pour toutes vos demarches en ligne.</p>
     </div>
 
     <ul class="liste-demarches" role="list">
-      {demarches.map(({ titre, description, url, source }) => (
+      {demarches.map((d) => (
         <li>
-          
-            href={url}
-            target="_blank"
-            rel="noopener noreferrer"
-            class="demarche-carte"
-          >
+          <a href={d.url} target="_blank" rel="noopener noreferrer" class="demarche-carte">
             <div class="demarche-contenu">
-              <strong>{titre}</strong>
-              <p>{description}</p>
+              <strong>{d.titre}</strong>
+              <p>{d.description}</p>
             </div>
-            <span class="badge">{source}</span>
+            <span class="badge">{d.source}</span>
           </a>
         </li>
       ))}
