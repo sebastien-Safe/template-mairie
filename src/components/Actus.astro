@@ -1,0 +1,78 @@
+---
+import { readFileSync, readdirSync } from "fs";
+import { join } from "path";
+
+interface Actu {
+  titre: string;
+  date: string;
+  corps: string;
+  slug: string;
+}
+
+const actus: Actu[] = [];
+
+try {
+  const dir = join(process.cwd(), "src/content/actus");
+  const fichiers = readdirSync(dir).filter(f => f.endsWith(".md"));
+
+  for (const fichier of fichiers) {
+    const raw = readFileSync(join(dir, fichier), "utf-8");
+    const titre = raw.match(/titre:\s*"([^"]+)"/)?.[1] ?? "Sans titre";
+    const date  = raw.match(/date:\s*"([^"]+)"/)?.[1] ?? "";
+    const corps = raw.match(/---[\s\S]*?---\s*([\s\S]*)/)?.[1]?.trim() ?? "";
+    actus.push({ titre, date, corps, slug: fichier.replace(".md", "") });
+  }
+
+  actus.sort((a, b) => b.date.localeCompare(a.date));
+} catch {}
+
+const formatter = new Intl.DateTimeFormat("fr-FR", {
+  day: "numeric", month: "long", year: "numeric"
+});
+
+function formaterDate(d: string) {
+  try { return formatter.format(new Date(d)); }
+  catch { return d; }
+}
+---
+
+{actus.length === 0 ? (
+  <p class="vide">Aucune actualité pour le moment.</p>
+) : (
+  <ul class="actus" role="list">
+    {actus.slice(0, 4).map(a => (
+      <li class="actu-carte">
+        <time datetime={a.date} class="date">{formaterDate(a.date)}</time>
+        <h3>{a.titre}</h3>
+        {a.corps && <p>{a.corps}</p>}
+      </li>
+    ))}
+  </ul>
+)}
+
+<style>
+  .actus { list-style: none; display: flex; flex-direction: column; gap: 1.25rem; }
+  .actu-carte {
+    border-left: 4px solid var(--bleu);
+    padding: 0.75rem 1rem;
+    background: var(--gris-f);
+    border-radius: 0 4px 4px 0;
+  }
+  .date {
+    display: block;
+    font-size: 0.78rem;
+    color: var(--gris-t);
+    margin-bottom: 0.35rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+  h3 {
+    font-size: 1rem;
+    font-weight: 700;
+    color: var(--bleu);
+    margin-bottom: 0.35rem;
+  }
+  p { font-size: 0.9rem; color: var(--texte); line-height: 1.6; }
+  .vide { color: var(--gris-t); font-style: italic; }
+</style>

@@ -1,0 +1,66 @@
+---
+export interface Props {
+  title: string;
+  description?: string;
+}
+
+const { title, description = "Site officiel de la commune" } = Astro.props;
+---
+<!doctype html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content={description} />
+    <title>{title}</title>
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <style>
+      :root {
+        --bleu:    #003189;
+        --rouge:   #E1000F;
+        --blanc:   #FFFFFF;
+        --gris-f:  #F5F5F5;
+        --gris-t:  #6B6B6B;
+        --texte:   #161616;
+        --focus:   #0a76f6;
+      }
+      *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+      html { font-size: 16px; }
+      body {
+        font-family: "Marianne", Arial, sans-serif;
+        color: var(--texte);
+        background: var(--blanc);
+        min-height: 100vh;
+        display: flex;
+        flex-direction: column;
+      }
+      a:focus-visible {
+        outline: 3px solid var(--focus);
+        outline-offset: 2px;
+      }
+      main { flex: 1; }
+      .skip-link {
+        position: absolute;
+        top: -100%;
+        left: 1rem;
+        background: var(--bleu);
+        color: var(--blanc);
+        padding: 0.5rem 1rem;
+        border-radius: 0 0 4px 4px;
+        font-weight: 700;
+        z-index: 9999;
+        text-decoration: none;
+      }
+      .skip-link:focus { top: 0; }
+    </style>
+  </head>
+  <body>
+    <a href="#contenu-principal" class="skip-link">Aller au contenu principal</a>
+    <slot name="bandeau-urgence" />
+    <slot name="nav" />
+    <main id="contenu-principal" tabindex="-1">
+      <slot />
+    </main>
+    <slot name="footer" />
+  </body>
+</html>

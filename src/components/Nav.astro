@@ -1,0 +1,63 @@
+---
+const liens = [
+  { href: "/",           label: "Accueil" },
+  { href: "/mairie",     label: "La mairie" },
+  { href: "/demarches",  label: "Démarches" },
+  { href: "/vie-locale", label: "Vie locale" },
+];
+
+const pathname = Astro.url.pathname;
+---
+
+<header role="banner">
+  <div class="barre-top">
+    <span class="nom-commune">NOM_COMMUNE</span>
+  </div>
+  <nav aria-label="Navigation principale">
+    <ul role="list">
+      {liens.map(({ href, label }) => (
+        <li>
+          <a href={href} aria-current={pathname === href ? "page" : undefined}>
+            {label}
+          </a>
+        </li>
+      ))}
+    </ul>
+  </nav>
+</header>
+
+<style>
+  header { border-bottom: 3px solid var(--bleu); }
+  .barre-top {
+    background: var(--bleu);
+    color: var(--blanc);
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: 0.75rem 1.5rem;
+  }
+  .nom-commune {
+    font-size: 1.25rem;
+    font-weight: 700;
+  }
+  nav { background: var(--blanc); padding: 0 1.5rem; }
+  nav ul { display: flex; gap: 0; list-style: none; flex-wrap: wrap; }
+  nav a {
+    display: block;
+    padding: 0.875rem 1.25rem;
+    text-decoration: none;
+    color: var(--texte);
+    font-weight: 500;
+    border-bottom: 3px solid transparent;
+  }
+  nav a:hover { border-bottom-color: var(--bleu); color: var(--bleu); }
+  nav a[aria-current="page"] {
+    border-bottom-color: var(--rouge);
+    color: var(--rouge);
+    font-weight: 700;
+  }
+  @media (max-width: 600px) {
+    nav ul { flex-direction: column; }
+    nav a { padding: 0.75rem 0; }
+  }
+</style>
