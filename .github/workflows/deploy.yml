@@ -27,7 +27,7 @@ jobs:
       - name: Deploy to Scaleway Object Storage
         uses: jakejarvis/s3-sync-action@master
         with:
-          args: --delete
+          args: --delargs: --delete --acl public-readete
         env:
           AWS_S3_BUCKET: ${{ secrets.SCW_BUCKET_NAME }}
           AWS_ACCESS_KEY_ID: ${{ secrets.SCW_ACCESS_KEY }}
