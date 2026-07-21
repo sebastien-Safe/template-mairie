@@ -1,5 +1,5 @@
 backend:
-  name: github
+  name: test-repo
   repo: sebastien-Safe/template-mairie
   branch: main
   base_url: https://api.proconnect.gouv.fr
