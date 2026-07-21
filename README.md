@@ -1,10 +1,8 @@
 # Template Mairie
 
 Template Astro pour sites de mairies rurales françaises, conforme à la charte
-républicaine (RGAA 4.1) et pensé pour un déploiement rapide sur Scaleway
-Object Storage (Scaleway fr-par).
-
-Démo : https://mairies-template.s3.fr-par.scw.cloud/index.html
+républicaine (RGAA 4.1), pensé pour être dupliqué et personnalisé par chaque
+commune, et déployé simplement sur Netlify.
 
 ## Stack
 
@@ -13,7 +11,8 @@ Démo : https://mairies-template.s3.fr-par.scw.cloud/index.html
   (à l'exception de l'interface d'administration Decap CMS)
 - Contenu géré en Markdown (`src/content/`)
 - Interface d'édition : [Decap CMS](https://decapcms.org) (`public/admin.html`)
-- Hébergement : Scaleway Object Storage, déploiement via GitHub Actions
+- Hébergement : [Netlify](https://netlify.com) — build et déploiement
+  automatiques à chaque push sur `main`, HTTPS géré nativement
 
 ## Développement
 
@@ -70,56 +69,33 @@ L'interface d'édition est accessible sur `/admin.html`.
   Cela nécessite qu'un client OAuth ProConnect soit enregistré pour le
   domaine du site (voir procédure d'onboarding ci-dessous).
 
-## Déploiement (CI/CD)
+## Déploiement (Netlify)
 
-Le déploiement est automatique via `.github/workflows/deploy.yml` : chaque
-push sur `main` build le site puis le synchronise sur un bucket Scaleway
-Object Storage (`s3-sync-action`). Secrets GitHub requis sur le dépôt :
+Le build est défini dans `netlify.toml` (`npm run build`, publie `dist/`).
+Aucune CI à maintenir : une fois le dépôt connecté à Netlify, chaque push
+sur `main` déclenche un build et un déploiement automatiques.
 
-| Secret | Description |
-| --- | --- |
-| `SCW_BUCKET_NAME` | Nom du bucket Object Storage |
-| `SCW_ACCESS_KEY` | Clé d'accès Scaleway (IAM) |
-| `SCW_SECRET_KEY` | Clé secrète associée |
+1. Sur [app.netlify.com](https://app.netlify.com), **Add new site → Import
+   an existing project**, choisir le dépôt GitHub de la commune.
+2. Netlify détecte `netlify.toml` automatiquement (commande de build et
+   dossier de publication déjà configurés) — valider le déploiement.
+3. Le site est en ligne sur une URL `*.netlify.app` en quelques dizaines de
+   secondes, en HTTPS par défaut.
 
-## SSL / HTTPS
+## SSL / HTTPS et headers de sécurité
 
-Scaleway Object Storage en mode "site web statique" (`s3-website.fr-par.scw.cloud`)
-ne fournit **pas** de certificat SSL sur les domaines personnalisés pointés
-en CNAME. Pour servir un site en HTTPS sur le domaine de la commune
-(ex. `saint-marcel-en-dombes.collectivite.fr`), il faut placer
-**Scaleway Edge Services** devant le bucket :
+Netlify gère automatiquement le certificat **Let's Encrypt** dès qu'un nom
+de domaine personnalisé est attaché au site (**Site settings → Domain
+management → Add a domain**), y compris son renouvellement — aucune action
+manuelle après la configuration initiale du DNS (CNAME vers le sous-domaine
+`*.netlify.app`, ou délégation de zone si domaine apex).
 
-1. Dans la console Scaleway, créer un pipeline **Edge Services** avec le
-   bucket Object Storage du site comme origine (backend).
-2. Attacher le nom de domaine de la commune au pipeline Edge Services.
-3. Activer le certificat **Let's Encrypt géré automatiquement** par Edge
-   Services pour ce domaine (renouvellement automatique, aucune action
-   manuelle ensuite).
-4. Mettre à jour le CNAME DNS du domaine de la commune pour qu'il pointe
-   vers l'endpoint Edge Services fourni (et non plus directement vers
-   `*.s3-website.fr-par.scw.cloud`).
-5. Vérifier la propagation DNS puis l'émission du certificat (quelques
-   minutes à quelques heures selon le TTL du DNS).
-
-C'est aussi Edge Services qui doit être utilisé pour appliquer les headers
-de sécurité (voir section suivante) : le stockage objet seul ne les sert pas.
-
-## Headers de sécurité
-
-`public/_headers` définit les headers attendus (`X-Frame-Options`,
-`X-Content-Type-Options`, `Referrer-Policy`, `Permissions-Policy`,
-`Content-Security-Policy`) au format Netlify/Cloudflare Pages.
-
-**Important** : Scaleway Object Storage en hébergement statique ne lit pas
-ce fichier nativement — c'est une convention propre aux plateformes de
-type Netlify/Cloudflare Pages. Pour que ces headers soient réellement
-envoyés au navigateur, ils doivent être configurés au niveau de
-**Scaleway Edge Services** (règles de réponse HTTP / rules engine), en
-front du bucket. Sans cette couche, `public/_headers` reste un fichier de
-référence documentant la politique attendue, mais n'a aucun effet sur les
-réponses HTTP réelles — l'objectif "Mozilla Observatory ≥ A" ne peut être
-atteint qu'une fois Edge Services configuré avec ces règles.
+`public/_headers` est lu **nativement** par Netlify au déploiement : les
+headers `X-Frame-Options`, `X-Content-Type-Options`, `Referrer-Policy`,
+`Permissions-Policy` et `Content-Security-Policy` qui y sont définis sont
+appliqués tels quels, sans configuration supplémentaire. C'est ce qui
+permet d'atteindre un score [Mozilla Observatory](https://observatory.mozilla.org/)
+correct (B- et au-delà) dès le premier déploiement.
 
 ## Onboarding d'une nouvelle commune
 
@@ -128,28 +104,24 @@ atteint qu'une fois Edge Services configuré avec ces règles.
 2. **Renseigner les informations de la commune** dans
    `src/content/config.md` (nom, SIREN, nom du maire, adresse, téléphone,
    email, nom de domaine) — ou via l'interface Decap CMS une fois le backend
-   GitHub configuré.
+   configuré.
 3. **Adapter le contenu de démo** : horaires (`src/content/horaires.md`),
    actualités (`src/content/actus/`), associations
    (`src/content/associations/`), pages `mairie.astro` (conseil municipal)
    et `vie-locale.astro` (écoles, commerces, collecte des déchets).
-4. **Configurer Decap CMS** (`public/decap-config.yml`) :
-   - passer `backend.name` de `test-repo` à `github`
-   - renseigner `backend.repo` avec `<organisation>/<depot-de-la-commune>`
-   - enregistrer un client OAuth ProConnect pour le domaine de la commune et
-     vérifier `base_url` / `auth_endpoint`
-5. **Créer le bucket Scaleway Object Storage** (région `fr-par`) dédié à la
-   commune, et une clé IAM avec les droits d'écriture sur ce bucket.
-6. **Configurer les secrets GitHub Actions** du nouveau dépôt :
-   `SCW_BUCKET_NAME`, `SCW_ACCESS_KEY`, `SCW_SECRET_KEY`.
-7. **Déclencher un premier déploiement** (push sur `main`) et vérifier que
-   le site est bien accessible via l'URL du bucket.
-8. **Configurer le domaine et le SSL** : suivre la procédure « SSL / HTTPS »
-   ci-dessus (Scaleway Edge Services + Let's Encrypt + headers de sécurité),
-   puis mettre à jour le CNAME du domaine de la commune.
-9. **Vérifier** : navigation complète du site, interface `/admin.html`,
-   score [Mozilla Observatory](https://observatory.mozilla.org/) ≥ A sur le
-   domaine final.
+4. **Configurer Decap CMS** (`public/decap-config.yml`) : passer
+   `backend.name` de `test-repo` à `github`, renseigner `backend.repo`,
+   puis choisir l'authentification :
+   - **Simple** : activer *Identity* + *Git Gateway* dans les paramètres
+     du site Netlify (quelques clics, aucun enregistrement OAuth requis).
+   - **Agents publics (ProConnect)** : garder `base_url` /
+     `auth_endpoint` pointés sur ProConnect, en enregistrant un client
+     OAuth pour le domaine de la commune.
+5. **Connecter le dépôt à Netlify** (voir « Déploiement » ci-dessus).
+6. **Attacher le domaine de la commune** et vérifier l'émission du
+   certificat SSL (voir « SSL / HTTPS » ci-dessus).
+7. **Vérifier** : navigation complète du site, interface `/admin.html`,
+   score Mozilla Observatory ≥ B- sur le domaine final.
 
 ## Accessibilité et données personnelles
 
