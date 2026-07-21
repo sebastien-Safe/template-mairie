@@ -23,26 +23,15 @@ jobs:
 
       - name: Build Astro
         run: npm run build
-        env:
-          PROCONNECT_CLIENT_ID: ${{ secrets.PROCONNECT_CLIENT_ID }}
-          PROCONNECT_CLIENT_SECRET: ${{ secrets.PROCONNECT_CLIENT_SECRET }}
 
-      - name: Install Scaleway CLI
-        run: |
-          curl -sL https://raw.githubusercontent.com/scaleway/scaleway-cli/master/scripts/get.sh | sh
-
-      - name: Deploy to Scaleway Pages
-        run: |
-          mkdir -p ~/.config/scw
-          cat > ~/.config/scw/config.yaml << EOF
-          secret_key: ${SCW_SECRET_KEY}
-          default_project_id: ${SCW_PROJECT_ID}
-          default_region: fr-par
-          default_zone: fr-par-1
-          EOF
-          scw object bucket create name=${SCW_BUCKET_NAME} region=fr-par 2>/dev/null || true
-          scw object sync source=dist/ destination=s3://${SCW_BUCKET_NAME}
+      - name: Deploy to Scaleway Object Storage
+        uses: jakejarvis/s3-sync-action@master
+        with:
+          args: --delete
         env:
-          SCW_SECRET_KEY: ${{ secrets.SCW_SECRET_KEY }}
-          SCW_PROJECT_ID: ${{ secrets.SCW_PROJECT_ID }}
-          SCW_BUCKET_NAME: ${{ secrets.SCW_BUCKET_NAME }}
+          AWS_S3_BUCKET: ${{ secrets.SCW_BUCKET_NAME }}
+          AWS_ACCESS_KEY_ID: ${{ secrets.SCW_ACCESS_KEY }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.SCW_SECRET_KEY }}
+          AWS_S3_ENDPOINT: https://s3.fr-par.scw.cloud
+          AWS_REGION: fr-par
+          SOURCE_DIR: dist
