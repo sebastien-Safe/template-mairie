@@ -1,0 +1,77 @@
+backend:
+  name: github
+  repo: sebastien-Safe/template-mairie
+  branch: main
+  base_url: https://api.proconnect.gouv.fr
+  auth_endpoint: /api/v2/authorize
+
+locale: fr
+
+media_folder: public/media
+public_folder: /media
+
+collections:
+
+  - name: commune
+    label: "Commune"
+    files:
+
+      - name: config
+        label: "Informations générales"
+        file: src/content/config.md
+        fields:
+          - { name: nom_commune,  label: "Nom de la commune",  widget: string }
+          - { name: siren,        label: "SIREN",               widget: string }
+          - { name: nom_maire,    label: "Nom du maire",        widget: string }
+          - { name: adresse,      label: "Adresse",             widget: string }
+          - { name: telephone,    label: "Téléphone",           widget: string }
+          - { name: email,        label: "Email de contact",    widget: string }
+          - { name: nom_domaine,  label: "Nom de domaine",      widget: string }
+
+      - name: urgence
+        label: "Bandeau d'urgence"
+        file: src/content/urgence.md
+        fields:
+          - { name: actif,  label: "Activer le bandeau",  widget: boolean,  default: false }
+          - name: niveau
+            label: "Niveau d'alerte"
+            widget: select
+            options:
+              - { label: "Jaune — Avis",     value: jaune }
+              - { label: "Orange — Alerte",  value: orange }
+              - { label: "Rouge — Urgence",  value: rouge }
+            default: jaune
+          - { name: texte, label: "Message d'urgence", widget: text, required: false }
+
+      - name: horaires
+        label: "Horaires d'ouverture"
+        file: src/content/horaires.md
+        fields:
+          - { name: lundi,    label: "Lundi",    widget: string, default: "Fermé" }
+          - { name: mardi,    label: "Mardi",    widget: string, default: "Fermé" }
+          - { name: mercredi, label: "Mercredi", widget: string, default: "Fermé" }
+          - { name: jeudi,    label: "Jeudi",    widget: string, default: "Fermé" }
+          - { name: vendredi, label: "Vendredi", widget: string, default: "Fermé" }
+          - { name: samedi,   label: "Samedi",   widget: string, default: "Fermé" }
+          - { name: dimanche, label: "Dimanche", widget: string, default: "Fermé" }
+
+  - name: actus
+    label: "Actualités"
+    folder: src/content/actus
+    create: true
+    slug: "{{year}}-{{month}}-{{day}}-{{slug}}"
+    fields:
+      - { name: titre, label: "Titre",        widget: string }
+      - { name: date,  label: "Date",         widget: datetime, format: "YYYY-MM-DD", date_format: "DD/MM/YYYY", time_format: false }
+      - { name: body,  label: "Contenu",      widget: text,    required: false }
+
+  - name: associations
+    label: "Associations"
+    folder: src/content/associations
+    create: true
+    slug: "{{slug}}"
+    fields:
+      - { name: nom,         label: "Nom de l'association", widget: string }
+      - { name: description, label: "Description",          widget: text }
+      - { name: email,       label: "Email de contact",     widget: string, required: false }
+      - { name: telephone,   label: "Téléphone",            widget: string, required: false }
