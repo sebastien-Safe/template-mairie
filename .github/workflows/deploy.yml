@@ -27,10 +27,18 @@ jobs:
           PROCONNECT_CLIENT_ID: ${{ secrets.PROCONNECT_CLIENT_ID }}
           PROCONNECT_CLIENT_SECRET: ${{ secrets.PROCONNECT_CLIENT_SECRET }}
 
+      - name: Install Scaleway CLI
+        run: |
+          curl -sL https://raw.githubusercontent.com/scaleway/scaleway-cli/master/scripts/get.sh | sh
+
       - name: Deploy to Scaleway Pages
-        uses: scaleway/action-scw-pages@v1
-        with:
-          secret-key: ${{ secrets.SCW_SECRET_KEY }}
-          project-id: ${{ secrets.SCW_PROJECT_ID }}
-          bucket-name: ${{ secrets.SCW_BUCKET_NAME }}
-          dist-dir: dist
+        run: |
+          scw config set secret-key=$SCW_SECRET_KEY
+          scw config set project-id=$SCW_PROJECT_ID
+          scw config set default-region=fr-par
+          scw object bucket create name=$SCW_BUCKET_NAME region=fr-par project-id=$SCW_PROJECT_ID 2>/dev/null || true
+          scw object sync source=dist/ destination=s3://$SCW_BUCKET_NAME
+        env:
+          SCW_SECRET_KEY: ${{ secrets.SCW_SECRET_KEY }}
+          SCW_PROJECT_ID: ${{ secrets.SCW_PROJECT_ID }}
+          SCW_BUCKET_NAME: ${{ secrets.SCW_BUCKET_NAME }}
