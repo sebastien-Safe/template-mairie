@@ -31,5 +31,143 @@
     </div>
     <div id="nc-root"></div>
     <script src="https://unpkg.com/decap-cms@^3.0.0/dist/decap-cms.js"></script>
+    <script>
+      var BLEU = "#003189", GRIS_F = "#F5F5F5", GRIS_T = "#6B6B6B", TEXTE = "#161616";
+
+      var ConfigPreview = createClass({
+        render: function () {
+          var e = this.props.entry;
+          var g = function (k) { return e.getIn(["data", k], ""); };
+          var champs = ["siren", "nom_maire", "adresse", "telephone", "email", "nom_domaine"];
+          return h(
+            "div",
+            { style: { padding: "1.5rem", fontFamily: "Arial, sans-serif" } },
+            h("h2", { style: { color: BLEU, borderLeft: "5px solid #E1000F", paddingLeft: "1rem" } }, g("nom_commune") || "Nom de la commune"),
+            h(
+              "dl",
+              { style: { display: "flex", flexDirection: "column", gap: "0.4rem", fontSize: "0.9rem" } },
+              champs.map(function (k) {
+                return h(
+                  "div",
+                  { key: k, style: { display: "flex", gap: "1rem", borderBottom: "1px solid #e5e5e5", padding: "0.3rem 0" } },
+                  h("dt", { style: { fontWeight: 600, minWidth: "160px" } }, k),
+                  h("dd", { style: { color: GRIS_T } }, g(k))
+                );
+              })
+            )
+          );
+        },
+      });
+      CMS.registerPreviewTemplate("config", ConfigPreview);
+
+      var COULEURS_URGENCE = {
+        jaune: { bg: "#FEF7CD", border: "#F5A623", texte: "#7D4E00", label: "Avis" },
+        orange: { bg: "#FDEBD0", border: "#E67E22", texte: "#7D3000", label: "Alerte" },
+        rouge: { bg: "#FDEDEC", border: "#E1000F", texte: "#7D0000", label: "Urgence" },
+      };
+      var UrgencePreview = createClass({
+        render: function () {
+          var e = this.props.entry;
+          var actif = e.getIn(["data", "actif"]);
+          var niveau = e.getIn(["data", "niveau"]) || "jaune";
+          var texte = e.getIn(["data", "texte"]) || "";
+          var c = COULEURS_URGENCE[niveau] || COULEURS_URGENCE.jaune;
+          if (!actif) {
+            return h("div", { style: { padding: "1.5rem", fontFamily: "Arial, sans-serif", color: GRIS_T, fontStyle: "italic" } }, "Bandeau désactivé — rien ne s'affichera sur le site.");
+          }
+          return h(
+            "div",
+            { style: { padding: "1.5rem", fontFamily: "Arial, sans-serif" } },
+            h(
+              "div",
+              { style: { display: "flex", alignItems: "center", gap: "1rem", padding: "0.875rem 1.5rem", background: c.bg, borderLeft: "6px solid " + c.border, color: c.texte, fontWeight: 500 } },
+              h("span", { style: { flexShrink: 0, fontSize: "0.75rem", fontWeight: 700, textTransform: "uppercase", letterSpacing: "0.08em", padding: "0.2rem 0.6rem", borderRadius: "3px", background: c.border, color: "#fff" } }, c.label),
+              h("p", { style: { margin: 0 } }, texte)
+            )
+          );
+        },
+      });
+      CMS.registerPreviewTemplate("urgence", UrgencePreview);
+
+      var JOURS = [
+        ["lundi", "Lundi"], ["mardi", "Mardi"], ["mercredi", "Mercredi"], ["jeudi", "Jeudi"],
+        ["vendredi", "Vendredi"], ["samedi", "Samedi"], ["dimanche", "Dimanche"],
+      ];
+      var HorairesPreview = createClass({
+        render: function () {
+          var e = this.props.entry;
+          return h(
+            "div",
+            { style: { padding: "1.5rem", fontFamily: "Arial, sans-serif", maxWidth: "360px" } },
+            h("h3", { style: { color: BLEU, marginBottom: "0.75rem" } }, "Horaires d'ouverture"),
+            h(
+              "dl",
+              { style: { display: "flex", flexDirection: "column", gap: "0.4rem" } },
+              JOURS.map(function (j) {
+                var val = e.getIn(["data", j[0]]);
+                if (!val) return null;
+                return h(
+                  "div",
+                  { key: j[0], style: { display: "flex", justifyContent: "space-between", gap: "1rem", fontSize: "0.9rem", padding: "0.35rem 0", borderBottom: "1px solid " + GRIS_F } },
+                  h("dt", { style: { fontWeight: 600 } }, j[1]),
+                  h("dd", { style: { color: GRIS_T, textAlign: "right" } }, val)
+                );
+              })
+            )
+          );
+        },
+      });
+      CMS.registerPreviewTemplate("horaires", HorairesPreview);
+
+      var ActusPreview = createClass({
+        render: function () {
+          var e = this.props.entry;
+          var titre = e.getIn(["data", "titre"]) || "Sans titre";
+          var date = e.getIn(["data", "date"]) || "";
+          return h(
+            "div",
+            { style: { padding: "1.5rem", fontFamily: "Arial, sans-serif", maxWidth: "480px" } },
+            h(
+              "div",
+              { style: { borderLeft: "4px solid " + BLEU, padding: "0.75rem 1rem", background: GRIS_F, borderRadius: "0 4px 4px 0" } },
+              h("time", { style: { display: "block", fontSize: "0.78rem", color: GRIS_T, marginBottom: "0.35rem", fontWeight: 600, textTransform: "uppercase", letterSpacing: "0.05em" } }, date),
+              h("h3", { style: { fontSize: "1rem", fontWeight: 700, color: BLEU, marginBottom: "0.35rem" } }, titre),
+              h("div", { style: { fontSize: "0.9rem", color: TEXTE, lineHeight: 1.6 } }, this.props.widgetFor("body"))
+            )
+          );
+        },
+      });
+      CMS.registerPreviewTemplate("actus", ActusPreview);
+
+      var AssociationsPreview = createClass({
+        render: function () {
+          var e = this.props.entry;
+          var nom = e.getIn(["data", "nom"]) || "";
+          var description = e.getIn(["data", "description"]) || "";
+          var email = e.getIn(["data", "email"]);
+          return h(
+            "div",
+            { style: { padding: "1.5rem", fontFamily: "Arial, sans-serif", maxWidth: "280px" } },
+            h(
+              "div",
+              { style: { background: GRIS_F, borderTop: "3px solid " + BLEU, borderRadius: "0 0 4px 4px", padding: "1rem", display: "flex", flexDirection: "column", gap: "0.4rem" } },
+              h("strong", { style: { color: BLEU, fontWeight: 600 } }, nom),
+              h("p", { style: { fontSize: "0.875rem", color: GRIS_T } }, description),
+              email ? h("a", { href: "mailto:" + email, style: { color: BLEU, fontSize: "0.875rem", fontWeight: 600, textDecoration: "none" } }, "Contacter") : null
+            )
+          );
+        },
+      });
+      CMS.registerPreviewTemplate("associations", AssociationsPreview);
+    </script>
+    <script>
+      // Le lien "Test Backend" est codé en dur dans le bundle decap-cms (non
+      // configurable) ; on le renomme après montage. Fragile : à revérifier
+      // après toute mise à jour de version de Decap CMS.
+      new MutationObserver(function () {
+        var lien = document.querySelector('a[href="https://www.decapcms.org/docs/test-backend"]');
+        if (lien && lien.textContent !== "Tester ↗") lien.textContent = "Tester ↗";
+      }).observe(document.body, { childList: true, subtree: true });
+    </script>
   </body>
 </html>
