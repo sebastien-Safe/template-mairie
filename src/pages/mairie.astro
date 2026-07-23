@@ -3,7 +3,8 @@ import CharteRepublicaine from "../layouts/CharteRepublicaine.astro";
 import Nav from "../components/Nav.astro";
 import Footer from "../components/Footer.astro";
 import BandeauUrgence from "../components/BandeauUrgence.astro";
-import { commune } from "../lib/config";
+import ConseilMunicipal from "../components/ConseilMunicipal.astro";
+import { commune, identite } from "../lib/config";
 ---
 
 <CharteRepublicaine title={`La mairie — ${commune.nom_commune}`}>
@@ -13,22 +14,17 @@ import { commune } from "../lib/config";
   <div class="conteneur">
     <h1>La mairie</h1>
 
+    {identite.photo_mairie && (
+      <img
+        src={identite.photo_mairie}
+        alt={`Mairie de ${commune.nom_commune}`}
+        class="photo-mairie"
+      />
+    )}
+
     <section aria-labelledby="titre-conseil">
       <h2 id="titre-conseil">Le conseil municipal</h2>
-      <dl class="equipe">
-        <div class="membre">
-          <dt>Maire</dt>
-          <dd>{commune.nom_maire}</dd>
-        </div>
-        <div class="membre">
-          <dt>1er adjoint</dt>
-          <dd>Marie Lefèvre</dd>
-        </div>
-        <div class="membre">
-          <dt>2e adjoint</dt>
-          <dd>Pierre Dubois</dd>
-        </div>
-      </dl>
+      <ConseilMunicipal />
     </section>
 
     <section aria-labelledby="titre-pv">
@@ -78,28 +74,11 @@ import { commune } from "../lib/config";
     padding-bottom: 0.5rem;
     margin-bottom: 1.25rem;
   }
-  .equipe {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-    gap: 1rem;
-  }
-  .membre {
-    background: var(--gris-f);
-    padding: 1rem;
+  .photo-mairie {
+    width: 100%;
+    max-height: 320px;
+    object-fit: cover;
     border-radius: 4px;
-    border-top: 3px solid var(--bleu);
-  }
-  .membre dt {
-    font-size: 0.78rem;
-    font-weight: 700;
-    text-transform: uppercase;
-    letter-spacing: 0.06em;
-    color: var(--gris-t);
-    margin-bottom: 0.35rem;
-  }
-  .membre dd {
-    font-weight: 600;
-    color: var(--texte);
   }
   .intro {
     color: var(--gris-t);

@@ -34,3 +34,27 @@ function chargerConfig(): CommuneConfig {
 }
 
 export const commune = chargerConfig();
+
+export interface IdentiteVisuelle {
+  logo: string;
+  photo_mairie: string;
+}
+
+const defautsIdentite: IdentiteVisuelle = {
+  logo: "",
+  photo_mairie: "",
+};
+
+function chargerIdentite(): IdentiteVisuelle {
+  const identite = { ...defautsIdentite };
+  try {
+    const raw = readFileSync(join(process.cwd(), "src/content/identite.md"), "utf-8");
+    for (const cle of Object.keys(defautsIdentite) as (keyof IdentiteVisuelle)[]) {
+      const match = raw.match(new RegExp(`^${cle}:\\s*"([^"]*)"`, "m"));
+      if (match && match[1]) identite[cle] = match[1];
+    }
+  } catch {}
+  return identite;
+}
+
+export const identite = chargerIdentite();

@@ -1,5 +1,5 @@
 ---
-import { commune } from "../lib/config";
+import { commune, identite } from "../lib/config";
 
 const liens = [
   { href: "/",            label: "Accueil" },
@@ -13,6 +13,7 @@ const pathname = Astro.url.pathname;
 
 <header role="banner">
   <div class="barre-top">
+    {identite.logo && <img src={identite.logo} alt="" class="logo-commune" />}
     <span class="nom-commune">{commune.nom_commune}</span>
   </div>
   <nav aria-label="Navigation principale">
@@ -41,6 +42,10 @@ const pathname = Astro.url.pathname;
   .nom-commune {
     font-size: 1.25rem;
     font-weight: 700;
+  }
+  .logo-commune {
+    height: 32px;
+    width: auto;
   }
   nav { background: var(--blanc); padding: 0 1.5rem; }
   nav ul { display: flex; gap: 0; list-style: none; flex-wrap: wrap; }

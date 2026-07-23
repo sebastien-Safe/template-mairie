@@ -159,6 +159,50 @@
         },
       });
       CMS.registerPreviewTemplate("associations", AssociationsPreview);
+
+      var IdentitePreview = createClass({
+        render: function () {
+          var e = this.props.entry;
+          var logo = e.getIn(["data", "logo"]);
+          var photoMairie = e.getIn(["data", "photo_mairie"]);
+          return h(
+            "div",
+            { style: { padding: "1.5rem", fontFamily: "Arial, sans-serif", display: "flex", flexDirection: "column", gap: "1.5rem" } },
+            h(
+              "div",
+              {},
+              h("p", { style: { fontSize: "0.78rem", fontWeight: 700, textTransform: "uppercase", letterSpacing: "0.05em", color: GRIS_T, marginBottom: "0.5rem" } }, "Logo / blason"),
+              logo ? h("img", { src: this.props.getAsset(logo).toString(), style: { height: "64px", width: "auto" } }) : h("p", { style: { color: GRIS_T, fontStyle: "italic" } }, "Aucun logo")
+            ),
+            h(
+              "div",
+              {},
+              h("p", { style: { fontSize: "0.78rem", fontWeight: 700, textTransform: "uppercase", letterSpacing: "0.05em", color: GRIS_T, marginBottom: "0.5rem" } }, "Photo de la mairie"),
+              photoMairie ? h("img", { src: this.props.getAsset(photoMairie).toString(), style: { width: "100%", maxWidth: "360px", maxHeight: "220px", objectFit: "cover", borderRadius: "4px" } }) : h("p", { style: { color: GRIS_T, fontStyle: "italic" } }, "Aucune photo")
+            )
+          );
+        },
+      });
+      CMS.registerPreviewTemplate("identite", IdentitePreview);
+
+      var ConseilPreview = createClass({
+        render: function () {
+          var e = this.props.entry;
+          var nom = e.getIn(["data", "nom"]) || "";
+          var fonction = e.getIn(["data", "fonction"]) || "";
+          var photo = e.getIn(["data", "photo"]);
+          return h(
+            "div",
+            { style: { padding: "1.5rem", fontFamily: "Arial, sans-serif", display: "flex", flexDirection: "column", alignItems: "center", textAlign: "center", gap: "0.4rem", maxWidth: "160px" } },
+            photo
+              ? h("img", { src: this.props.getAsset(photo).toString(), style: { width: "96px", height: "96px", borderRadius: "50%", objectFit: "cover", border: "3px solid " + BLEU } })
+              : h("span", { style: { display: "block", width: "96px", height: "96px", borderRadius: "50%", background: GRIS_F, border: "3px solid " + BLEU } }),
+            h("strong", { style: { color: BLEU, fontWeight: 600 } }, nom),
+            h("p", { style: { fontSize: "0.85rem", color: GRIS_T, margin: 0 } }, fonction)
+          );
+        },
+      });
+      CMS.registerPreviewTemplate("conseil", ConseilPreview);
     </script>
     <script>
       // Le lien "Test Backend" est codé en dur dans le bundle decap-cms (non

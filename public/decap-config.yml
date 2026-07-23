@@ -59,6 +59,25 @@ collections:
           - { name: samedi,   label: "Samedi",   widget: string, default: "Fermé" }
           - { name: dimanche, label: "Dimanche", widget: string, default: "Fermé" }
 
+      - name: identite
+        label: "Identité visuelle"
+        file: src/content/identite.md
+        fields:
+          - { name: logo,         label: "Logo / blason de la commune", widget: image, required: false }
+          - { name: photo_mairie, label: "Photo de la mairie",          widget: image, required: false }
+
+  - name: conseil
+    label: "Conseil municipal"
+    folder: src/content/conseil
+    create: true
+    slug: "{{slug}}"
+    hint: "Nombre de conseillers municipaux selon la population : moins de 100 hab. → 7 ; 100 à 499 → 11 ; 500 à 1 499 → 15 ; 1 500 à 2 499 → 19."
+    fields:
+      - { name: nom,      label: "Nom",              widget: string }
+      - { name: fonction, label: "Fonction",          widget: string, hint: "Ex. Maire, 1er adjoint, Conseiller municipal..." }
+      - { name: photo,    label: "Photo",             widget: image,  required: false }
+      - { name: ordre,    label: "Ordre d'affichage", widget: number, default: 0, value_type: "int" }
+
   - name: actus
     label: "Actualités"
     folder: src/content/actus
