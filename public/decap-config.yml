@@ -5,6 +5,8 @@ backend:
   base_url: https://api.proconnect.gouv.fr
   auth_endpoint: /api/v2/authorize
 
+logo_url: /logo-securite.png
+
 locale: fr
 
 media_folder: public/media
