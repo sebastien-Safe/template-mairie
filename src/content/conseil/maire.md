@@ -1,6 +1,6 @@
 ---
 nom: "Jean-Pierre Durand"
 fonction: "Maire"
-photo: ""
+photo: "/media/maire.jpg"
 ordre: 1
 ---

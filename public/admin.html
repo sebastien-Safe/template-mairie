@@ -4,7 +4,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="robots" content="noindex, nofollow" />
-    <title>Administration — Saint-Marcel-en-Dombes</title>
+    <title>Administration — Mon Village</title>
     <link href="/decap-config.yml" type="text/yaml" rel="cms-config-url" />
     <style>
       /* Masque le back-office aux moteurs de recherche visuellement */
@@ -212,6 +212,21 @@
       new MutationObserver(function () {
         var lien = document.querySelector('a[href="https://www.decapcms.org/docs/test-backend"]');
         if (lien) lien.remove();
+      }).observe(document.body, { childList: true, subtree: true });
+
+      // Decap CMS affiche un petit logo "Decap CMS" en filigrane en bas de
+      // l'écran de connexion dès qu'un logo personnalisé (logo.src) est
+      // configuré — non désactivable via la config. On le masque via son
+      // style calculé (position:absolute; bottom:10px; couleur #c4c6d2),
+      // seule signature disponible car ni classe ni attribut stables.
+      // Fragile : à revérifier après toute mise à jour de version de Decap CMS.
+      new MutationObserver(function () {
+        document.querySelectorAll("svg").forEach(function (svg) {
+          var style = getComputedStyle(svg);
+          if (style.position === "absolute" && style.bottom === "10px" && style.color === "rgb(196, 198, 210)") {
+            svg.style.display = "none";
+          }
+        });
       }).observe(document.body, { childList: true, subtree: true });
     </script>
   </body>

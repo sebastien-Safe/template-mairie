@@ -1,9 +1,9 @@
 ---
-nom_commune: "Saint-Marcel-en-Dombes"
+nom_commune: "Mon Village"
 siren: "010 123 456"
 nom_maire: "Jean-Pierre Durand"
-adresse: "1 place de la Mairie, 01330 Saint-Marcel-en-Dombes"
+adresse: "1 place de la Mairie, 00000 Mon Village"
 telephone: "04 74 98 12 34"
-email: "mairie@saint-marcel-en-dombes.fr"
-nom_domaine: "saint-marcel-en-dombes.collectivite.fr"
+email: "mairie@mon-village.fr"
+nom_domaine: "mon-village.collectivite.fr"
 ---
