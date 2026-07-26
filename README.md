@@ -50,12 +50,23 @@ donc qu'un seul endroit à modifier pour personnaliser un site.
 
 L'interface d'édition est accessible sur `/admin.html`.
 
-- **En démo / test**, le backend est configuré sur `test-repo`
-  (`public/decap-config.yml` → `backend.name: test-repo`) : l'interface
-  fonctionne sans authentification, avec des données stockées uniquement en
+- **Sans backend configuré**, `backend.name: test-repo` fait fonctionner
+  l'interface sans authentification, avec des données stockées uniquement en
   mémoire dans le navigateur (rien n'est écrit sur GitHub). C'est le mode à
   utiliser pour valider l'interface avant de la connecter à un vrai dépôt.
-- **En production**, basculer sur le backend GitHub avec ProConnect :
+- **Sur ce dépôt de démo**, le backend est `git-gateway`
+  (`public/decap-config.yml` → `backend.name: git-gateway`), qui s'appuie sur
+  Netlify Identity + Git Gateway : les modifications faites dans `/admin.html`
+  sont réellement commitées sur `main`. Prérequis côté Netlify (à faire une
+  fois, dans le dashboard du site) :
+  1. **Site settings → Identity → Enable Identity**.
+  2. **Identity → Registration** : passer sur *Invite only*.
+  3. **Identity → Services → Git Gateway → Enable Git Gateway**.
+  4. Inviter les utilisateurs admin depuis l'onglet *Identity* (email
+     d'invitation avec lien vers le site, qui redirige ensuite vers
+     `/admin.html` — géré par le script dans `CharteRepublicaine.astro`).
+- **En production pour une vraie commune (agents publics)**, basculer sur le
+  backend GitHub avec ProConnect :
 
   ```yaml
   backend:

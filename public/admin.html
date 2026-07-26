@@ -30,6 +30,7 @@
       <p><strong>Sécurité et solidité</strong> — l'administration numérique de votre commune, protégée.</p>
     </div>
     <div id="nc-root"></div>
+    <script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
     <script src="https://unpkg.com/decap-cms@^3.0.0/dist/decap-cms.js"></script>
     <script>
       var BLEU = "#003189", GRIS_F = "#F5F5F5", GRIS_T = "#6B6B6B", TEXTE = "#161616";
@@ -206,11 +207,11 @@
     </script>
     <script>
       // Le lien "Test Backend" est codé en dur dans le bundle decap-cms (non
-      // configurable) ; on le renomme après montage. Fragile : à revérifier
+      // configurable) ; on le supprime après montage. Fragile : à revérifier
       // après toute mise à jour de version de Decap CMS.
       new MutationObserver(function () {
         var lien = document.querySelector('a[href="https://www.decapcms.org/docs/test-backend"]');
-        if (lien && lien.textContent !== "Tester ↗") lien.textContent = "Tester ↗";
+        if (lien) lien.remove();
       }).observe(document.body, { childList: true, subtree: true });
     </script>
   </body>

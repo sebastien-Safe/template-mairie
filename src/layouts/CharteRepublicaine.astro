@@ -53,6 +53,18 @@ const { title, description = "Site officiel de la commune" } = Astro.props;
       }
       .skip-link:focus { top: 0; }
     </style>
+    <script src="https://identity.netlify.com/v1/netlify-identity-widget.js" is:inline></script>
+    <script is:inline>
+      if (window.netlifyIdentity) {
+        window.netlifyIdentity.on("init", (user) => {
+          if (!user) {
+            window.netlifyIdentity.on("login", () => {
+              document.location.href = "/admin.html";
+            });
+          }
+        });
+      }
+    </script>
   </head>
   <body>
     <a href="#contenu-principal" class="skip-link">Aller au contenu principal</a>
