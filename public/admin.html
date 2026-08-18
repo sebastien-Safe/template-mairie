@@ -9,6 +9,11 @@
     <style>
       /* Masque le back-office aux moteurs de recherche visuellement */
       body { margin: 0; }
+      /* Masque le logo Decap CMS par défaut sur l'écran de connexion
+         (aucune option de config pour le désactiver ; le nom de classe
+         généré inclut le nom du composant, plus stable qu'un ciblage
+         par position/couleur). */
+      [class*="DecapLogoIcon"] { display: none !important; }
     </style>
   </head>
   <body>
