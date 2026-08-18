@@ -16,6 +16,16 @@ const { title, description = "Site officiel de la commune" } = Astro.props;
     <meta name="description" content={description} />
     <title>{title}</title>
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <script is:inline>
+      (function () {
+        try {
+          var choix = localStorage.getItem("style-site");
+          if (choix === "simple" || choix === "moderne") {
+            document.documentElement.setAttribute("data-style", choix);
+          }
+        } catch (e) {}
+      })();
+    </script>
     <style>
       :root {
         --bleu:    #003189;

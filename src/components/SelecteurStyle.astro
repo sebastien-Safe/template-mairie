@@ -1,0 +1,89 @@
+---
+import { commune } from "../lib/config";
+---
+
+<div class="selecteur-style" data-selecteur-style>
+  <span class="etiquette" id="etiquette-style">Style</span>
+  <div role="group" aria-labelledby="etiquette-style">
+    <button type="button" data-valeur="simple" aria-pressed={commune.style === "simple"}>Simple</button>
+    <button type="button" data-valeur="moderne" aria-pressed={commune.style === "moderne"}>Moderne</button>
+  </div>
+</div>
+
+<style>
+  .selecteur-style {
+    position: absolute;
+    top: 1rem;
+    right: 1.5rem;
+    z-index: 5;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    background: var(--surface);
+    border: 1px solid var(--surface-bordure);
+    border-radius: var(--rayon-petit);
+    box-shadow: var(--ombre-carte);
+    backdrop-filter: var(--flou);
+    -webkit-backdrop-filter: var(--flou);
+    padding: 0.35rem 0.5rem;
+    font-size: 0.75rem;
+    opacity: 0.75;
+    transition: opacity 0.15s;
+  }
+  .selecteur-style:hover,
+  .selecteur-style:focus-within {
+    opacity: 1;
+  }
+  .etiquette {
+    color: var(--gris-t);
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    padding-left: 0.25rem;
+  }
+  [role="group"] {
+    display: flex;
+    gap: 0.25rem;
+  }
+  button {
+    font: inherit;
+    border: 1px solid transparent;
+    background: transparent;
+    color: var(--texte);
+    padding: 0.25rem 0.55rem;
+    border-radius: var(--rayon-petit);
+    cursor: pointer;
+  }
+  button:hover { background: var(--surface-hover); }
+  button[aria-pressed="true"] {
+    background: var(--bleu);
+    color: var(--blanc);
+    font-weight: 600;
+  }
+  @media (max-width: 480px) {
+    .etiquette { display: none; }
+  }
+</style>
+
+<script is:inline>
+  (function () {
+    var CLE = "style-site";
+    function boutons() {
+      return document.querySelectorAll("[data-selecteur-style] button");
+    }
+    function majBoutons(valeur) {
+      boutons().forEach(function (btn) {
+        btn.setAttribute("aria-pressed", String(btn.dataset.valeur === valeur));
+      });
+    }
+    function appliquer(valeur) {
+      document.documentElement.setAttribute("data-style", valeur);
+      majBoutons(valeur);
+      try { localStorage.setItem(CLE, valeur); } catch (e) {}
+    }
+    boutons().forEach(function (btn) {
+      btn.addEventListener("click", function () { appliquer(btn.dataset.valeur); });
+    });
+    majBoutons(document.documentElement.getAttribute("data-style") || "simple");
+  })();
+</script>
