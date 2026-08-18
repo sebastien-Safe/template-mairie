@@ -78,7 +78,7 @@ import { commune, identite } from "../lib/config";
     width: 100%;
     max-height: 320px;
     object-fit: cover;
-    border-radius: 4px;
+    border-radius: var(--rayon-lg);
   }
   .intro {
     color: var(--gris-t);
@@ -91,14 +91,18 @@ import { commune, identite } from "../lib/config";
     align-items: center;
     gap: 1rem;
     padding: 0.875rem 1rem;
-    background: var(--gris-f);
-    border-radius: 4px;
+    background: var(--surface);
+    border: 1px solid var(--surface-bordure);
+    border-radius: var(--rayon);
+    box-shadow: var(--ombre-carte);
+    backdrop-filter: var(--flou);
+    -webkit-backdrop-filter: var(--flou);
     text-decoration: none;
     color: var(--texte);
     border-left: 4px solid var(--bleu);
     transition: background 0.15s;
   }
-  .doc-lien:hover { background: #e8edf5; }
+  .doc-lien:hover { background: var(--surface-hover); }
   .doc-lien strong { display: block; color: var(--bleu); font-weight: 600; }
   .doc-lien small { color: var(--gris-t); font-size: 0.8rem; }
   .doc-icone { font-size: 1.5rem; flex-shrink: 0; }

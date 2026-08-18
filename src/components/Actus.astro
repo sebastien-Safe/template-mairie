@@ -53,10 +53,14 @@ function formaterDate(d: string) {
 <style>
   .actus { list-style: none; display: flex; flex-direction: column; gap: 1.25rem; }
   .actu-carte {
+    border: 1px solid var(--surface-bordure);
     border-left: 4px solid var(--bleu);
     padding: 0.75rem 1rem;
-    background: var(--gris-f);
-    border-radius: 0 4px 4px 0;
+    background: var(--surface);
+    border-radius: 0 var(--rayon) var(--rayon) 0;
+    box-shadow: var(--ombre-carte);
+    backdrop-filter: var(--flou);
+    -webkit-backdrop-filter: var(--flou);
   }
   .date {
     display: block;

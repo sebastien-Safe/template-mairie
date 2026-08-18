@@ -1,6 +1,8 @@
 import { readFileSync } from "fs";
 import { join } from "path";
 
+export type StyleSite = "simple" | "moderne";
+
 export interface CommuneConfig {
   nom_commune: string;
   siren: string;
@@ -9,6 +11,7 @@ export interface CommuneConfig {
   telephone: string;
   email: string;
   nom_domaine: string;
+  style: StyleSite;
 }
 
 const defauts: CommuneConfig = {
@@ -19,10 +22,13 @@ const defauts: CommuneConfig = {
   telephone: "TELEPHONE",
   email: "EMAIL_COMMUNE",
   nom_domaine: "NOM_DOMAINE",
+  style: "simple",
 };
 
+const STYLES_VALIDES: StyleSite[] = ["simple", "moderne"];
+
 function chargerConfig(): CommuneConfig {
-  const config = { ...defauts };
+  const config: Record<string, string> = { ...defauts };
   try {
     const raw = readFileSync(join(process.cwd(), "src/content/config.md"), "utf-8");
     for (const cle of Object.keys(defauts) as (keyof CommuneConfig)[]) {
@@ -30,7 +36,8 @@ function chargerConfig(): CommuneConfig {
       if (match && match[1]) config[cle] = match[1];
     }
   } catch {}
-  return config;
+  if (!STYLES_VALIDES.includes(config.style as StyleSite)) config.style = defauts.style;
+  return config as unknown as CommuneConfig;
 }
 
 export const commune = chargerConfig();

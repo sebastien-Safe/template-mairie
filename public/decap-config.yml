@@ -26,6 +26,13 @@ collections:
           - { name: telephone,    label: "Téléphone",           widget: string }
           - { name: email,        label: "Email de contact",    widget: string }
           - { name: nom_domaine,  label: "Nom de domaine",      widget: string }
+          - name: style
+            label: "Style du site"
+            widget: select
+            options:
+              - { label: "Simple — sobre et institutionnel",        value: simple }
+              - { label: "Moderne — arrondi et effet de transparence", value: moderne }
+            default: simple
 
       - name: urgence
         label: "Bandeau d'urgence"

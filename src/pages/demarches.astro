@@ -63,10 +63,13 @@ const demarches = [
     padding-left: 1rem;
   }
   .notice {
-    background: #EEF2FF;
+    background: var(--surface-accent);
     border-left: 4px solid var(--bleu);
     padding: 1rem 1.25rem;
-    border-radius: 0 4px 4px 0;
+    border-radius: 0 var(--rayon) var(--rayon) 0;
+    box-shadow: var(--ombre-carte);
+    backdrop-filter: var(--flou);
+    -webkit-backdrop-filter: var(--flou);
     font-size: 0.9rem;
     color: var(--texte);
   }
@@ -82,15 +85,19 @@ const demarches = [
     align-items: flex-start;
     gap: 1rem;
     padding: 1rem 1.25rem;
-    background: var(--gris-f);
-    border-radius: 4px;
+    background: var(--surface);
+    border: 1px solid var(--surface-bordure);
+    border-radius: var(--rayon);
+    box-shadow: var(--ombre-carte);
+    backdrop-filter: var(--flou);
+    -webkit-backdrop-filter: var(--flou);
     border-left: 4px solid var(--bleu);
     text-decoration: none;
     color: var(--texte);
     height: 100%;
     transition: background 0.15s;
   }
-  .demarche-carte:hover { background: #e8edf5; }
+  .demarche-carte:hover { background: var(--surface-hover); }
   .demarche-contenu strong {
     display: block;
     color: var(--bleu);
@@ -111,7 +118,7 @@ const demarches = [
     background: var(--bleu);
     color: var(--blanc);
     padding: 0.2rem 0.5rem;
-    border-radius: 3px;
+    border-radius: var(--rayon-petit);
     white-space: nowrap;
   }
 </style>

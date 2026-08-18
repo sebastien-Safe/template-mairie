@@ -140,9 +140,13 @@ import { commune } from "../lib/config";
     gap: 1rem;
   }
   .carte {
-    background: var(--gris-f);
+    background: var(--surface);
+    border: 1px solid var(--surface-bordure);
     border-top: 3px solid var(--bleu);
-    border-radius: 0 0 4px 4px;
+    border-radius: 0 0 var(--rayon) var(--rayon);
+    box-shadow: var(--ombre-carte);
+    backdrop-filter: var(--flou);
+    -webkit-backdrop-filter: var(--flou);
     padding: 1rem;
     display: flex;
     flex-direction: column;
