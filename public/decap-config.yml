@@ -2,10 +2,6 @@ backend:
   name: git-gateway
   branch: main
 
-logo:
-  src: /logo-securite.png
-  show_in_header: true
-
 locale: fr
 
 media_folder: public/media
