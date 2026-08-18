@@ -54,4 +54,15 @@ const c = couleurs[urgence.niveau] ?? couleurs.jaune;
     border-radius: var(--rayon-petit);
   }
   p { margin: 0; }
+
+  :global(html[data-style="moderne"]) .bandeau-urgence {
+    max-width: 1100px;
+    margin: 0.75rem auto 0;
+    border-radius: var(--rayon);
+    box-shadow: var(--ombre-carte);
+    animation: apparition 0.5s ease both;
+  }
+  :global(html[data-style="moderne"]) .niveau-label {
+    animation: pulsation 2.2s ease-in-out infinite;
+  }
 </style>

@@ -73,4 +73,36 @@ try {
   }
   .carte a:hover { text-decoration: underline; }
   .vide { color: var(--gris-t); font-style: italic; }
+
+  :global(html[data-style="moderne"]) .carte {
+    position: relative;
+    border-top: none;
+    border-radius: var(--rayon);
+    animation: apparition 0.5s ease both;
+    transition: transform 0.25s ease, box-shadow 0.25s ease;
+  }
+  :global(html[data-style="moderne"]) .carte::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 4px;
+    border-radius: var(--rayon) var(--rayon) 0 0;
+    background: var(--degrade-vif);
+  }
+  :global(html[data-style="moderne"]) .carte:hover {
+    transform: translateY(-5px);
+    box-shadow: var(--ombre-glow);
+  }
+  :global(html[data-style="moderne"]) .carte strong {
+    background: var(--degrade-texte);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    color: transparent;
+  }
+  :global(html[data-style="moderne"]) .carte a {
+    color: var(--accent-vif);
+  }
 </style>

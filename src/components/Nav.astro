@@ -67,4 +67,58 @@ const pathname = Astro.url.pathname;
     nav ul { flex-direction: column; }
     nav a { padding: 0.75rem 0; }
   }
+
+  :global(html[data-style="moderne"]) header {
+    border-bottom: none;
+    box-shadow: var(--ombre-carte);
+  }
+  :global(html[data-style="moderne"]) .barre-top {
+    background: var(--degrade-vif);
+    background-size: 200% 200%;
+    animation: degrade-mouvant 16s ease infinite;
+  }
+  :global(html[data-style="moderne"]) .nom-commune {
+    text-shadow: 0 2px 12px rgb(0 0 0 / 20%);
+  }
+  :global(html[data-style="moderne"]) nav {
+    background: var(--surface);
+    backdrop-filter: var(--flou);
+    -webkit-backdrop-filter: var(--flou);
+    position: sticky;
+    top: 0;
+    z-index: 20;
+  }
+  :global(html[data-style="moderne"]) nav a {
+    position: relative;
+    border-bottom-color: transparent;
+    transition: color 0.2s ease, transform 0.2s ease;
+  }
+  :global(html[data-style="moderne"]) nav a::after {
+    content: "";
+    position: absolute;
+    left: 1.25rem;
+    right: 1.25rem;
+    bottom: 0;
+    height: 3px;
+    border-radius: 2px 2px 0 0;
+    background: var(--degrade-vif);
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.25s ease;
+  }
+  :global(html[data-style="moderne"]) nav a:hover {
+    color: var(--accent-vif);
+    transform: translateY(-1px);
+  }
+  :global(html[data-style="moderne"]) nav a:hover::after,
+  :global(html[data-style="moderne"]) nav a[aria-current="page"]::after {
+    transform: scaleX(1);
+  }
+  :global(html[data-style="moderne"]) nav a[aria-current="page"] {
+    background: var(--degrade-texte);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    color: transparent;
+  }
 </style>

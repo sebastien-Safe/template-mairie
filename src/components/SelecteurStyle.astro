@@ -63,6 +63,11 @@ import { commune } from "../lib/config";
   @media (max-width: 480px) {
     .etiquette { display: none; }
   }
+
+  :global(html[data-style="moderne"]) button[aria-pressed="true"] {
+    background: var(--degrade-vif);
+    box-shadow: var(--ombre-glow);
+  }
 </style>
 
 <script>

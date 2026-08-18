@@ -45,4 +45,14 @@ const jours = [
   }
   dt { font-weight: 600; color: var(--texte); }
   dd { color: var(--gris-t); text-align: right; }
+
+  :global(html[data-style="moderne"]) .ligne {
+    border-bottom-color: var(--surface-bordure);
+    border-radius: var(--rayon-petit);
+    padding: 0.5rem 0.75rem;
+    transition: background 0.2s ease;
+  }
+  :global(html[data-style="moderne"]) .ligne:hover {
+    background: var(--surface-hover);
+  }
 </style>

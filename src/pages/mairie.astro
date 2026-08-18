@@ -106,4 +106,30 @@ import { commune, identite } from "../lib/config";
   .doc-lien strong { display: block; color: var(--bleu); font-weight: 600; }
   .doc-lien small { color: var(--gris-t); font-size: 0.8rem; }
   .doc-icone { font-size: 1.5rem; flex-shrink: 0; }
+
+  :global(html[data-style="moderne"]) .photo-mairie {
+    transition: transform 0.35s ease;
+  }
+  :global(html[data-style="moderne"]) .photo-mairie:hover {
+    transform: scale(1.015);
+  }
+  :global(html[data-style="moderne"]) .doc-lien {
+    border-left: none;
+    position: relative;
+    transition: transform 0.25s ease, box-shadow 0.25s ease;
+  }
+  :global(html[data-style="moderne"]) .doc-lien::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    width: 4px;
+    border-radius: var(--rayon) 0 0 var(--rayon);
+    background: var(--degrade-vif);
+  }
+  :global(html[data-style="moderne"]) .doc-lien:hover {
+    transform: translateY(-3px);
+    box-shadow: var(--ombre-glow);
+  }
 </style>

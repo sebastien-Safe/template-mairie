@@ -162,4 +162,46 @@ import { commune } from "../lib/config";
     margin-top: auto;
   }
   .carte a:hover { text-decoration: underline; }
+
+  :global(html[data-style="moderne"]) .carte {
+    position: relative;
+    border-top: none;
+    border-radius: var(--rayon);
+    transition: transform 0.25s ease, box-shadow 0.25s ease;
+  }
+  :global(html[data-style="moderne"]) .carte::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 4px;
+    border-radius: var(--rayon) var(--rayon) 0 0;
+    background: var(--degrade-vif);
+  }
+  :global(html[data-style="moderne"]) .carte:hover {
+    transform: translateY(-5px);
+    box-shadow: var(--ombre-glow);
+  }
+  :global(html[data-style="moderne"]) .carte strong {
+    background: var(--degrade-texte);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    color: transparent;
+  }
+  :global(html[data-style="moderne"]) .carte a {
+    color: var(--accent-vif);
+  }
+  :global(html[data-style="moderne"]) .infos div,
+  :global(html[data-style="moderne"]) .collecte div {
+    border-radius: var(--rayon-petit);
+    padding: 0.5rem 0.75rem;
+    border-bottom-color: var(--surface-bordure);
+    transition: background 0.2s ease;
+  }
+  :global(html[data-style="moderne"]) .infos div:hover,
+  :global(html[data-style="moderne"]) .collecte div:hover {
+    background: var(--surface-hover);
+  }
 </style>

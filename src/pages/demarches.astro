@@ -121,4 +121,48 @@ const demarches = [
     border-radius: var(--rayon-petit);
     white-space: nowrap;
   }
+
+  :global(html[data-style="moderne"]) .notice {
+    border-left: none;
+    position: relative;
+  }
+  :global(html[data-style="moderne"]) .notice::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    width: 4px;
+    border-radius: var(--rayon) 0 0 var(--rayon);
+    background: var(--degrade-vif);
+  }
+  :global(html[data-style="moderne"]) .demarche-carte {
+    border-left: none;
+    position: relative;
+    transition: transform 0.25s ease, box-shadow 0.25s ease;
+  }
+  :global(html[data-style="moderne"]) .demarche-carte::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    width: 4px;
+    border-radius: var(--rayon) 0 0 var(--rayon);
+    background: var(--degrade-vif);
+  }
+  :global(html[data-style="moderne"]) .demarche-carte:hover {
+    transform: translateY(-4px);
+    box-shadow: var(--ombre-glow);
+  }
+  :global(html[data-style="moderne"]) .demarche-contenu strong {
+    background: var(--degrade-texte);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    color: transparent;
+  }
+  :global(html[data-style="moderne"]) .badge {
+    background: var(--degrade-vif);
+  }
 </style>

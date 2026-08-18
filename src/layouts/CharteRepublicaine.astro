@@ -49,16 +49,29 @@ const { title, description = "Site officiel de la commune" } = Astro.props;
         --flou:             none;
       }
       html[data-style="moderne"] {
-        --rayon:            18px;
-        --rayon-lg:         22px;
-        --rayon-petit:      8px;
+        --rayon:            20px;
+        --rayon-lg:         28px;
+        --rayon-petit:      10px;
         --surface:          rgb(255 255 255 / 55%);
         --surface-hover:    rgb(255 255 255 / 78%);
         --surface-accent:   rgb(0 49 137 / 10%);
         --surface-bordure:  rgb(255 255 255 / 55%);
         --ombre-carte:      0 8px 30px rgb(0 49 137 / 12%);
-        --fond-page:        linear-gradient(160deg, #eef2ff 0%, #f6f7fb 45%, #eaf3ff 100%);
+        --fond-page:        linear-gradient(160deg, #eef2ff 0%, #f3ecff 30%, #fdeef7 60%, #eafcfa 100%);
         --flou:             blur(16px);
+
+        /* Palette "jeunesse" — dégradés et accents vifs, réservés au style moderne */
+        --degrade-vif:      linear-gradient(120deg, #1E3A8A 0%, #4C1D95 55%, #7C3AED 100%);
+        --degrade-texte:    linear-gradient(120deg, #1E3A8A 0%, #6D28D9 100%);
+        --accent-vif:       #6D28D9;
+        --accent-rose:      #FF3D8D;
+        --accent-lime:      #FFC93C;
+        --accent-cyan:      #22D3D0;
+        --ombre-glow:       0 14px 34px rgb(76 29 149 / 30%);
+      }
+      html[data-style="moderne"] body {
+        background-size: 200% 200%;
+        animation: degrade-mouvant 26s ease infinite;
       }
       *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
       html { font-size: 16px; }
@@ -89,6 +102,69 @@ const { title, description = "Site officiel de la commune" } = Astro.props;
         text-decoration: none;
       }
       .skip-link:focus { top: 0; }
+    </style>
+    <style is:global>
+      @keyframes degrade-mouvant {
+        0%, 100% { background-position: 0% 50%; }
+        50% { background-position: 100% 50%; }
+      }
+      @keyframes flotter {
+        0%, 100% { transform: translateY(0) rotate(0deg); }
+        50% { transform: translateY(-18px) rotate(6deg); }
+      }
+      @keyframes apparition {
+        from { opacity: 0; transform: translateY(14px); }
+        to { opacity: 1; transform: translateY(0); }
+      }
+      @keyframes pulsation {
+        0%, 100% { box-shadow: 0 0 0 0 rgb(124 58 237 / 45%); }
+        50% { box-shadow: 0 0 0 10px rgb(124 58 237 / 0%); }
+      }
+
+      html[data-style="moderne"] main h2 {
+        position: relative;
+        border-bottom: none;
+        padding-bottom: 0.75rem;
+        background: var(--degrade-texte);
+        -webkit-background-clip: text;
+        background-clip: text;
+        -webkit-text-fill-color: transparent;
+        color: transparent;
+      }
+      html[data-style="moderne"] main h2::after {
+        content: "";
+        position: absolute;
+        left: 0;
+        bottom: 0;
+        width: 56px;
+        height: 4px;
+        border-radius: 2px;
+        background: var(--degrade-vif);
+      }
+      html[data-style="moderne"] .conteneur > h1 {
+        position: relative;
+        border-left: none;
+        padding-left: 1.25rem;
+      }
+      html[data-style="moderne"] .conteneur > h1::before {
+        content: "";
+        position: absolute;
+        left: 0;
+        top: 0.1em;
+        bottom: 0.1em;
+        width: 6px;
+        border-radius: 3px;
+        background: var(--degrade-vif);
+      }
+
+      @media (prefers-reduced-motion: reduce) {
+        *, *::before, *::after {
+          animation-duration: 0.001ms !important;
+          animation-iteration-count: 1 !important;
+          transition-duration: 0.001ms !important;
+          scroll-behavior: auto !important;
+        }
+      }
     </style>
   </head>
   <body>

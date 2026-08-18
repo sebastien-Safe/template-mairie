@@ -73,4 +73,43 @@ const annee = new Date().getFullYear();
       justify-content: space-between;
     }
   }
+
+  :global(html[data-style="moderne"]) footer {
+    position: relative;
+    overflow: hidden;
+    background: linear-gradient(135deg, #0B1948 0%, #241757 45%, #4C1D95 100%);
+    background-size: 200% 200%;
+    animation: degrade-mouvant 22s ease infinite;
+  }
+  :global(html[data-style="moderne"]) footer::before {
+    content: "";
+    position: absolute;
+    inset: 0 0 auto 0;
+    height: 4px;
+    background: linear-gradient(90deg, var(--accent-cyan), var(--accent-vif), var(--accent-rose));
+  }
+  :global(html[data-style="moderne"]) nav a {
+    position: relative;
+    text-decoration: none;
+    opacity: 0.9;
+    transition: opacity 0.2s ease;
+  }
+  :global(html[data-style="moderne"]) nav a::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: -3px;
+    height: 2px;
+    background: linear-gradient(90deg, var(--accent-cyan), var(--accent-rose));
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.25s ease;
+  }
+  :global(html[data-style="moderne"]) nav a:hover {
+    opacity: 1;
+  }
+  :global(html[data-style="moderne"]) nav a:hover::after {
+    transform: scaleX(1);
+  }
 </style>
