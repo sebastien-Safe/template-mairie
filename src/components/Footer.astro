@@ -74,33 +74,49 @@ const annee = new Date().getFullYear();
     }
   }
 
-  :global(html[data-style="foret"]) footer {
-    background: var(--degrade-vif);
+  /* Style 2 — pied de page minimal, filet fin, liens soulignés au survol (linéaire) */
+  :global(html[data-style="style2"]) footer {
+    background: var(--blanc);
+    color: var(--texte);
+    border-top: 1px solid var(--gris-f);
+    padding: 2.5rem 1.5rem;
   }
-  :global(html[data-style="foret"]) nav a {
-    transition: opacity 0.18s linear;
+  :global(html[data-style="style2"]) nav a {
+    color: var(--texte);
+    text-decoration: none;
+    border-bottom: 1px solid transparent;
+    transition: border-color 0.18s linear, color 0.18s linear;
+  }
+  :global(html[data-style="style2"]) nav a:hover {
+    color: var(--rouge);
+    border-color: var(--rouge);
+  }
+  :global(html[data-style="style2"]) .credit,
+  :global(html[data-style="style2"]) .credit a {
+    color: var(--gris-t);
   }
 
-  :global(html[data-style="techno"]) footer {
+  /* Style 3 — bandeau bicolore franc en tête de pied de page, liens en aplat au survol */
+  :global(html[data-style="style3"]) footer {
     position: relative;
-    overflow: hidden;
-    background: linear-gradient(135deg, #0A1628 0%, #142240 100%);
+    padding-top: calc(2rem + 6px);
   }
-  :global(html[data-style="techno"]) footer::before {
+  :global(html[data-style="style3"]) footer::before {
     content: "";
     position: absolute;
     inset: 0 0 auto 0;
-    height: 3px;
-    background: linear-gradient(90deg, var(--accent-vif), var(--accent-or));
+    height: 6px;
+    background: linear-gradient(90deg, var(--bleu) 50%, var(--rouge) 50%);
   }
-  :global(html[data-style="techno"]) nav a {
-    position: relative;
+  :global(html[data-style="style3"]) nav a {
+    text-transform: uppercase;
+    font-weight: 700;
+    letter-spacing: 0.03em;
     text-decoration: none;
-    opacity: 0.85;
-    transition: opacity 0.2s ease, text-shadow 0.2s ease;
+    padding: 0.15rem 0.4rem;
+    transition: background 0.12s linear;
   }
-  :global(html[data-style="techno"]) nav a:hover {
-    opacity: 1;
-    text-shadow: 0 0 10px rgb(59 130 246 / 55%);
+  :global(html[data-style="style3"]) nav a:hover {
+    background: var(--rouge);
   }
 </style>

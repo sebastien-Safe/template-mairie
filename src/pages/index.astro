@@ -100,54 +100,71 @@ import { commune } from "../lib/config";
     font-weight: 500;
   }
 
-  :global(html[data-style="foret"]) .hero,
-  :global(html[data-style="techno"]) .hero {
-    background: var(--degrade-vif);
+  /* Style 2 — hero éditorial : fond blanc, colonne étroite alignée à gauche, filet rouge court sous le titre */
+  :global(html[data-style="style2"]) .hero {
+    background: var(--blanc);
+    color: var(--texte);
+    padding: 4.5rem 1.5rem 3.5rem;
   }
-  :global(html[data-style="foret"]) h1,
-  :global(html[data-style="techno"]) h1 {
+  :global(html[data-style="style2"]) .hero-inner {
+    max-width: 640px;
+  }
+  :global(html[data-style="style2"]) h1 {
+    line-height: 1.1;
     animation: apparition 0.6s ease both;
   }
-  :global(html[data-style="foret"]) .accroche,
-  :global(html[data-style="techno"]) .accroche {
+  :global(html[data-style="style2"]) h1::after {
+    content: "";
+    display: block;
+    width: 64px;
+    height: 3px;
+    background: var(--rouge);
+    margin-top: 1.25rem;
+  }
+  :global(html[data-style="style2"]) .accroche {
+    font-family: var(--ff-disp);
+    font-style: italic;
+    font-weight: 500;
+    font-size: 1.3rem;
+    color: var(--gris-t);
+    opacity: 1;
+    margin-top: 1rem;
     animation: apparition 0.6s ease both 0.1s;
   }
 
-  :global(html[data-style="techno"]) .hero {
+  /* Style 3 — hero affiche : coin diagonal rouge sur fond bleu, titre géant qui glisse à l'ouverture */
+  :global(html[data-style="style3"]) .hero {
     overflow: hidden;
-    background-size: 200% 200%;
-    animation: degrade-mouvant 16s ease infinite;
   }
-  :global(html[data-style="techno"]) .hero::before,
-  :global(html[data-style="techno"]) .hero::after {
+  :global(html[data-style="style3"]) .hero::after {
     content: "";
     position: absolute;
-    z-index: 0;
-    border-radius: 50%;
-    filter: blur(40px);
-    opacity: 0.55;
-    animation: flotter 11s ease-in-out infinite;
+    inset: 0;
+    right: -5%;
+    clip-path: polygon(55% 0, 100% 0, 100% 100%, 30% 100%);
+    background: var(--rouge);
   }
-  :global(html[data-style="techno"]) .hero::before {
-    width: 220px;
-    height: 220px;
-    top: -70px;
-    right: 8%;
-    background: var(--accent-or);
-  }
-  :global(html[data-style="techno"]) .hero::after {
-    width: 170px;
-    height: 170px;
-    bottom: -60px;
-    left: 10%;
-    background: var(--accent-vif);
-    animation-delay: -5s;
-  }
-  :global(html[data-style="techno"]) .hero-inner {
+  :global(html[data-style="style3"]) .hero-inner {
     position: relative;
     z-index: 1;
+    max-width: 640px;
   }
-  :global(html[data-style="techno"]) h1 {
-    text-shadow: 0 0 30px rgb(59 130 246 / 45%);
+  :global(html[data-style="style3"]) h1 {
+    font-size: clamp(3rem, 8vw, 5.5rem);
+    line-height: 0.95;
+    animation: glisse-entree 0.6s cubic-bezier(.2, .8, .2, 1) both;
+  }
+  :global(html[data-style="style3"]) .accroche {
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    font-size: 1rem;
+    opacity: 1;
+    animation: glisse-entree 0.6s cubic-bezier(.2, .8, .2, 1) both 0.12s;
+  }
+  @media (max-width: 700px) {
+    :global(html[data-style="style3"]) .hero::after {
+      display: none;
+    }
   }
 </style>

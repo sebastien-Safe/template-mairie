@@ -19,14 +19,14 @@ const { title, description = "Site officiel de la commune" } = Astro.props;
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-      href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@500;600&family=IBM+Plex+Sans:wght@400;500;600;700&family=Sora:wght@600;700;800&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Playfair+Display:ital,wght@0,600;0,700;0,800;1,500;1,600&display=swap"
       rel="stylesheet"
     />
     <script>
       (function () {
         try {
           var choix = localStorage.getItem("style-site");
-          if (choix === "simple" || choix === "foret" || choix === "techno") {
+          if (choix === "style1" || choix === "style2" || choix === "style3") {
             document.documentElement.setAttribute("data-style", choix);
           }
         } catch (e) {}
@@ -54,70 +54,34 @@ const { title, description = "Site officiel de la commune" } = Astro.props;
         --fond-page:        var(--blanc);
         --flou:             none;
       }
-      /* Style "Forêt" — élégant, inspiré de safe-assurances.fr (evergreen / terracotta / cream) */
-      html[data-style="foret"] {
-        --bleu:             #1F4D38;
-        --rouge:            #C1502E;
-        --gris-f:           #E7DCC3;
-        --gris-t:           #7A7160;
-        --texte:            #182620;
-        --focus:            #2F6B4F;
-
-        --rayon:            16px;
-        --rayon-lg:         24px;
-        --rayon-petit:      10px;
-        --surface:          #FFFFFF;
-        --surface-hover:    rgb(23 36 28 / 5%);
-        --surface-accent:   rgb(47 107 79 / 8%);
-        --surface-bordure:  rgb(23 36 28 / 12%);
-        --ombre-carte:      0 18px 40px -20px rgb(23 36 28 / 25%);
-        --fond-page:        linear-gradient(180deg, #F7F1E4 0%, #EEE3CC 100%);
-        --flou:             blur(12px);
-
-        --degrade-vif:      linear-gradient(135deg, #1F4D38 0%, #2F6B4F 100%);
-        --accent-vif:       #2F6B4F;
-        --accent-or:        #C1502E;
-        --ombre-glow:       0 12px 30px rgb(47 107 79 / 30%);
-        --ff-disp:          'Sora', system-ui, sans-serif;
-        --ff-body:          'IBM Plex Sans', 'Marianne', Arial, sans-serif;
-        --ff-mono:          'IBM Plex Mono', ui-monospace, monospace;
+      /* Style 2 — élégant / éditorial : Playfair Display, mise en page aérée, accents fins, tricolore conservé */
+      html[data-style="style2"] {
+        --rayon:            2px;
+        --rayon-lg:         2px;
+        --rayon-petit:      2px;
+        --surface:          var(--blanc);
+        --surface-hover:    #F7F5F0;
+        --surface-accent:   #F7F5F0;
+        --surface-bordure:  transparent;
+        --ombre-carte:      none;
+        --fond-page:        var(--blanc);
+        --flou:             none;
+        --ff-disp:          'Playfair Display', Georgia, serif;
       }
 
-      /* Style "Techno" — sombre, inspiré de safe-digitalisation.fr (navy / bleu / ambre, effet verre + néon) */
-      html[data-style="techno"] {
-        --bleu:             #7DB2FF;
-        --rouge:            #FBBF24;
-        --gris-f:           rgb(255 255 255 / 10%);
-        --gris-t:           #94A3B8;
-        --texte:            #E2E8F0;
-        --focus:            #22D3EE;
-
-        --rayon:            18px;
-        --rayon-lg:         28px;
-        --rayon-petit:      10px;
-        --surface:          rgb(20 34 64 / 55%);
-        --surface-hover:    rgb(255 255 255 / 8%);
-        --surface-accent:   rgb(59 130 246 / 14%);
-        --surface-bordure:  rgb(255 255 255 / 12%);
-        --ombre-carte:      0 20px 50px -15px rgb(0 0 0 / 55%);
-        --fond-page:        linear-gradient(180deg, #0A1628 0%, #142240 100%);
-        --flou:             blur(18px);
-
-        --degrade-vif:      linear-gradient(120deg, #1E40AF 0%, #2563EB 100%);
-        --accent-vif:       #3B82F6;
-        --accent-or:        #F59E0B;
-        --ombre-glow:       0 0 0 1px rgb(59 130 246 / 35%), 0 0 26px rgb(59 130 246 / 55%);
-        --ff-disp:          'Sora', system-ui, sans-serif;
-        --ff-body:          'IBM Plex Sans', 'Marianne', Arial, sans-serif;
-        --ff-mono:          'IBM Plex Mono', ui-monospace, monospace;
-      }
-      html[data-style="foret"] body,
-      html[data-style="techno"] body {
-        font-family: var(--ff-body);
-      }
-      html[data-style="techno"] body {
-        background-size: 200% 200%;
-        animation: degrade-mouvant 30s ease infinite;
+      /* Style 3 — affiche tricolore, effet wahou : Bebas Neue, aplats francs, ombre portée dure */
+      html[data-style="style3"] {
+        --rayon:            0px;
+        --rayon-lg:         0px;
+        --rayon-petit:      0px;
+        --surface:          var(--blanc);
+        --surface-hover:    #F0F4FA;
+        --surface-accent:   #F0F4FA;
+        --surface-bordure:  var(--bleu);
+        --ombre-carte:      6px 6px 0 var(--rouge);
+        --fond-page:        var(--blanc);
+        --flou:             none;
+        --ff-disp:          'Bebas Neue', Impact, sans-serif;
       }
       *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
       html { font-size: 16px; }
@@ -148,122 +112,71 @@ const { title, description = "Site officiel de la commune" } = Astro.props;
         text-decoration: none;
       }
       .skip-link:focus { top: 0; }
-      html[data-style="foret"] .skip-link,
-      html[data-style="techno"] .skip-link {
-        background: var(--degrade-vif);
-      }
     </style>
     <style is:global>
-      @keyframes degrade-mouvant {
-        0%, 100% { background-position: 0% 50%; }
-        50% { background-position: 100% 50%; }
-      }
-      @keyframes flotter {
-        0%, 100% { transform: translateY(0) rotate(0deg); }
-        50% { transform: translateY(-18px) rotate(6deg); }
-      }
       @keyframes apparition {
         from { opacity: 0; transform: translateY(14px); }
         to { opacity: 1; transform: translateY(0); }
       }
-      @keyframes pulsation {
-        0%, 100% { box-shadow: 0 0 0 0 rgb(59 130 246 / 45%); }
-        50% { box-shadow: 0 0 0 10px rgb(59 130 246 / 0%); }
+      @keyframes glisse-entree {
+        from { opacity: 0; transform: translateX(-40px) scale(0.97); }
+        to { opacity: 1; transform: none; }
       }
 
-      /* Ambiance de fond : halos + trame légère, comme sur safe-assurances.fr / safe-digitalisation.fr */
-      html[data-style="foret"] body,
-      html[data-style="techno"] body {
-        position: relative;
-      }
-      html[data-style="foret"] body::before,
-      html[data-style="techno"] body::before,
-      html[data-style="foret"] body::after,
-      html[data-style="techno"] body::after {
-        content: "";
-        position: fixed;
-        inset: 0;
-        z-index: 0;
-        pointer-events: none;
-      }
-      html[data-style="foret"] body::before {
-        background:
-          radial-gradient(900px 600px at 85% -5%, rgb(47 107 79 / 12%), transparent 60%),
-          radial-gradient(800px 700px at -10% 20%, rgb(193 80 46 / 8%), transparent 55%);
-      }
-      html[data-style="techno"] body::before {
-        background:
-          radial-gradient(900px 600px at 85% -5%, rgb(37 99 235 / 22%), transparent 60%),
-          radial-gradient(800px 700px at -10% 20%, rgb(245 158 11 / 10%), transparent 55%);
-      }
-      html[data-style="foret"] body::after,
-      html[data-style="techno"] body::after {
-        opacity: 0.5;
-        background-image:
-          linear-gradient(var(--gris-f) 1px, transparent 1px),
-          linear-gradient(90deg, var(--gris-f) 1px, transparent 1px);
-        background-size: 54px 54px;
-        mask-image: radial-gradient(circle at 50% 30%, #000, transparent 80%);
-        -webkit-mask-image: radial-gradient(circle at 50% 30%, #000, transparent 80%);
-      }
-      html[data-style="foret"] header,
-      html[data-style="foret"] main,
-      html[data-style="foret"] footer,
-      html[data-style="techno"] header,
-      html[data-style="techno"] main,
-      html[data-style="techno"] footer {
-        position: relative;
-        z-index: 1;
-      }
-
-      /* Typographie : Sora pour les titres, IBM Plex Sans pour le corps (comme les deux sites de référence) */
-      html[data-style="foret"] h1,
-      html[data-style="foret"] h2,
-      html[data-style="foret"] h3,
-      html[data-style="techno"] h1,
-      html[data-style="techno"] h2,
-      html[data-style="techno"] h3 {
+      /* Style 2 — titres en Playfair Display, filet rouge fin, mise en page éditoriale */
+      html[data-style="style2"] h1,
+      html[data-style="style2"] h2,
+      html[data-style="style2"] h3 {
         font-family: var(--ff-disp);
-        letter-spacing: -0.01em;
+        font-weight: 700;
       }
-
-      html[data-style="foret"] main h2,
-      html[data-style="techno"] main h2 {
-        position: relative;
+      html[data-style="style2"] main h2 {
         border-bottom: none;
-        padding-bottom: 0.75rem;
+        border-left: 2px solid var(--rouge);
+        padding-left: 1rem;
+        padding-bottom: 0;
+        letter-spacing: 0.01em;
       }
-      html[data-style="foret"] main h2::after,
-      html[data-style="techno"] main h2::after {
+      html[data-style="style2"] .conteneur > h1 {
+        border-left: none;
+        padding-left: 0;
+        position: relative;
+        padding-bottom: 0.85rem;
+      }
+      html[data-style="style2"] .conteneur > h1::after {
         content: "";
         position: absolute;
         left: 0;
         bottom: 0;
-        width: 56px;
+        width: 64px;
         height: 3px;
-        border-radius: 2px;
-        background: var(--degrade-vif);
+        background: var(--rouge);
       }
-      html[data-style="foret"] .conteneur > h1,
-      html[data-style="techno"] .conteneur > h1 {
-        position: relative;
+
+      /* Style 3 — titres en Bebas Neue, capitales, aplats francs */
+      html[data-style="style3"] h1,
+      html[data-style="style3"] h2,
+      html[data-style="style3"] h3 {
+        font-family: var(--ff-disp);
+        text-transform: uppercase;
+        letter-spacing: 0.02em;
+        font-weight: 400;
+      }
+      html[data-style="style3"] main h2 {
+        display: inline-block;
+        border-bottom: none;
+        background: var(--bleu);
+        color: var(--blanc);
+        padding: 0.3rem 1rem;
+        font-size: 1.4rem;
+      }
+      html[data-style="style3"] .conteneur > h1 {
         border-left: none;
-        padding-left: 1.25rem;
-      }
-      html[data-style="foret"] .conteneur > h1::before,
-      html[data-style="techno"] .conteneur > h1::before {
-        content: "";
-        position: absolute;
-        left: 0;
-        top: 0.1em;
-        bottom: 0.1em;
-        width: 5px;
-        border-radius: 3px;
-        background: var(--degrade-vif);
-      }
-      html[data-style="techno"] main h2,
-      html[data-style="techno"] .conteneur > h1 {
-        text-shadow: 0 0 20px rgb(59 130 246 / 25%);
+        padding-left: 0;
+        padding-bottom: 0.6rem;
+        border-bottom: 8px solid var(--rouge);
+        display: inline-block;
+        font-size: clamp(2rem, 5vw, 3.25rem);
       }
 
       @media (prefers-reduced-motion: reduce) {

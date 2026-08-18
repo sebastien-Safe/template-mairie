@@ -122,42 +122,37 @@ const demarches = [
     white-space: nowrap;
   }
 
-  :global(html[data-style="foret"]) .notice,
-  :global(html[data-style="techno"]) .notice,
-  :global(html[data-style="foret"]) .demarche-carte,
-  :global(html[data-style="techno"]) .demarche-carte {
-    border-left: none;
-    position: relative;
+  /* Style 2 — filet bleu, plat, sans ombre */
+  :global(html[data-style="style2"]) .notice {
+    border-left: 2px solid var(--bleu);
+    border-radius: 0;
+    box-shadow: none;
   }
-  :global(html[data-style="foret"]) .notice::before,
-  :global(html[data-style="techno"]) .notice::before,
-  :global(html[data-style="foret"]) .demarche-carte::before,
-  :global(html[data-style="techno"]) .demarche-carte::before {
-    content: "";
-    position: absolute;
-    left: 0;
-    top: 0;
-    bottom: 0;
-    width: 4px;
-    border-radius: var(--rayon) 0 0 var(--rayon);
-    background: var(--degrade-vif);
+  :global(html[data-style="style2"]) .demarche-carte {
+    border: none;
+    border-left: 2px solid var(--bleu);
+    border-radius: 0;
+    background: transparent;
+    box-shadow: none;
   }
-  :global(html[data-style="foret"]) .badge,
-  :global(html[data-style="techno"]) .badge {
-    background: var(--degrade-vif);
-  }
-  :global(html[data-style="foret"]) .demarche-carte {
-    transition: transform 0.2s linear, box-shadow 0.2s linear;
-  }
-  :global(html[data-style="foret"]) .demarche-carte:hover {
-    transform: translateY(-4px);
+
+  /* Style 3 — cadre franc et ombre portée dure */
+  :global(html[data-style="style3"]) .notice {
+    border: 2px solid var(--bleu);
+    border-radius: 0;
     box-shadow: var(--ombre-carte);
   }
-  :global(html[data-style="techno"]) .demarche-carte {
-    transition: transform 0.25s ease, box-shadow 0.25s ease;
+  :global(html[data-style="style3"]) .demarche-carte {
+    border: 2px solid var(--bleu);
+    border-radius: 0;
+    box-shadow: var(--ombre-carte);
+    transition: transform 0.15s linear, box-shadow 0.15s linear;
   }
-  :global(html[data-style="techno"]) .demarche-carte:hover {
-    transform: translateY(-4px);
-    box-shadow: var(--ombre-glow);
+  :global(html[data-style="style3"]) .demarche-carte:hover {
+    transform: translate(-3px, -3px);
+    box-shadow: 9px 9px 0 var(--rouge);
+  }
+  :global(html[data-style="style3"]) .badge {
+    border-radius: 0;
   }
 </style>

@@ -74,26 +74,30 @@ try {
   p { font-size: 0.85rem; color: var(--gris-t); margin: 0; }
   .vide { color: var(--gris-t); font-style: italic; }
 
-  :global(html[data-style="foret"]) .photo,
-  :global(html[data-style="techno"]) .photo {
-    border: none;
-    padding: 3px;
-    box-sizing: border-box;
-    background: var(--degrade-vif);
+  /* Style 2 — anneau rouge fin, léger soulèvement linéaire au survol */
+  :global(html[data-style="style2"]) .photo {
+    border: 2px solid var(--rouge);
   }
-  :global(html[data-style="foret"]) .membre-carte {
-    transition: transform 0.2s linear;
+  :global(html[data-style="style2"]) .membre-carte {
+    transition: transform 0.18s linear;
   }
-  :global(html[data-style="foret"]) .membre-carte:hover {
-    transform: translateY(-4px);
+  :global(html[data-style="style2"]) .membre-carte:hover {
+    transform: translateY(-3px);
   }
-  :global(html[data-style="techno"]) .membre-carte {
-    transition: transform 0.25s ease;
+
+  /* Style 3 — portrait "badge" légèrement incliné avec ombre portée dure */
+  :global(html[data-style="style3"]) .photo {
+    border-radius: 6px;
+    border: 3px solid var(--bleu);
+    box-shadow: 5px 5px 0 var(--rouge);
+    transform: rotate(-2deg);
+    transition: transform 0.15s linear, box-shadow 0.15s linear;
   }
-  :global(html[data-style="techno"]) .membre-carte:hover {
-    transform: translateY(-4px);
+  :global(html[data-style="style3"]) .membre-carte:nth-child(even) .photo {
+    transform: rotate(2deg);
   }
-  :global(html[data-style="techno"]) .membre-carte:hover .photo {
-    animation: pulsation 1.4s ease-in-out infinite;
+  :global(html[data-style="style3"]) .membre-carte:hover .photo {
+    transform: translate(-2px, -2px) rotate(0deg);
+    box-shadow: 8px 8px 0 var(--rouge);
   }
 </style>

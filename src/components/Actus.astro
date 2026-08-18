@@ -80,40 +80,38 @@ function formaterDate(d: string) {
   p { font-size: 0.9rem; color: var(--texte); line-height: 1.6; }
   .vide { color: var(--gris-t); font-style: italic; }
 
-  :global(html[data-style="foret"]) .actu-carte,
-  :global(html[data-style="techno"]) .actu-carte {
-    position: relative;
-    border-left: none;
-    border-radius: var(--rayon);
+  /* Style 2 — liste éditoriale : filet fin, le titre glisse au survol (linéaire) */
+  :global(html[data-style="style2"]) .actu-carte {
+    border: none;
+    border-left: 2px solid var(--bleu);
+    border-radius: 0;
+    background: transparent;
+    padding: 0.75rem 0 0.75rem 1.25rem;
+    transition: background 0.18s linear;
   }
-  :global(html[data-style="foret"]) .actu-carte::before,
-  :global(html[data-style="techno"]) .actu-carte::before {
-    content: "";
-    position: absolute;
-    left: 0;
-    top: 0;
-    bottom: 0;
-    width: 4px;
-    background: var(--degrade-vif);
+  :global(html[data-style="style2"]) .actu-carte:hover {
+    background: var(--surface-hover);
   }
-  :global(html[data-style="foret"]) .actu-carte {
-    transition: transform 0.2s linear, box-shadow 0.2s linear;
+  :global(html[data-style="style2"]) h3 {
+    transition: transform 0.18s linear;
   }
-  :global(html[data-style="foret"]) .actu-carte:hover {
-    transform: translateY(-4px);
+  :global(html[data-style="style2"]) .actu-carte:hover h3 {
+    transform: translateX(4px);
+  }
+
+  /* Style 3 — carte à bordure franche et ombre portée dure, effet "carte à jouer" */
+  :global(html[data-style="style3"]) .actu-carte {
+    border: 2px solid var(--bleu);
+    border-radius: 0;
     box-shadow: var(--ombre-carte);
+    transition: transform 0.15s linear, box-shadow 0.15s linear;
   }
-  :global(html[data-style="techno"]) .actu-carte {
-    overflow: hidden;
-    animation: apparition 0.5s ease both;
-    transition: transform 0.25s ease, box-shadow 0.25s ease;
+  :global(html[data-style="style3"]) .actu-carte:hover {
+    transform: translate(-3px, -3px);
+    box-shadow: 9px 9px 0 var(--rouge);
   }
-  :global(html[data-style="techno"]) .actu-carte:hover {
-    transform: translateY(-4px);
-    box-shadow: var(--ombre-glow);
+  :global(html[data-style="style3"]) .date {
+    font-family: var(--ff-disp);
+    letter-spacing: 0.08em;
   }
-  :global(html[data-style="techno"]) .actu-carte:nth-child(1) { animation-delay: 0.05s; }
-  :global(html[data-style="techno"]) .actu-carte:nth-child(2) { animation-delay: 0.12s; }
-  :global(html[data-style="techno"]) .actu-carte:nth-child(3) { animation-delay: 0.19s; }
-  :global(html[data-style="techno"]) .actu-carte:nth-child(4) { animation-delay: 0.26s; }
 </style>

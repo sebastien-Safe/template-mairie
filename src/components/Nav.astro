@@ -68,68 +68,86 @@ const pathname = Astro.url.pathname;
     nav a { padding: 0.75rem 0; }
   }
 
-  :global(html[data-style="foret"]) header,
-  :global(html[data-style="techno"]) header {
-    border-bottom: none;
-    box-shadow: var(--ombre-carte);
+  /* Style 2 — élégant : bandeau blanc, nom en Playfair italique, soulignement qui se déploie depuis le centre */
+  :global(html[data-style="style2"]) header {
+    border-bottom: 1px solid var(--gris-f);
   }
-  :global(html[data-style="foret"]) .barre-top,
-  :global(html[data-style="techno"]) .barre-top {
-    background: var(--degrade-vif);
+  :global(html[data-style="style2"]) .barre-top {
+    background: var(--blanc);
+    color: var(--texte);
+    padding: 1.25rem 1.5rem 1rem;
   }
-  :global(html[data-style="techno"]) .barre-top {
-    background-size: 200% 200%;
-    animation: degrade-mouvant 16s ease infinite;
+  :global(html[data-style="style2"]) .nom-commune {
+    font-family: var(--ff-disp);
+    font-style: italic;
+    font-weight: 600;
+    font-size: 1.4rem;
   }
-  :global(html[data-style="techno"]) .nom-commune {
-    text-shadow: 0 2px 12px rgb(0 0 0 / 20%);
-  }
-  :global(html[data-style="foret"]) nav,
-  :global(html[data-style="techno"]) nav {
-    background: var(--surface);
-    backdrop-filter: var(--flou);
-    -webkit-backdrop-filter: var(--flou);
+  :global(html[data-style="style2"]) nav {
     position: sticky;
     top: 0;
     z-index: 20;
-    border-bottom: 1px solid var(--surface-bordure);
+    background: var(--blanc);
+    border-bottom: 1px solid var(--gris-f);
   }
-  :global(html[data-style="foret"]) nav ul,
-  :global(html[data-style="techno"]) nav ul {
-    gap: 0.25rem;
-    padding: 0.5rem 0;
-  }
-  :global(html[data-style="foret"]) nav a,
-  :global(html[data-style="techno"]) nav a {
+  :global(html[data-style="style2"]) nav a {
+    position: relative;
     border-bottom: none;
-    border-radius: var(--rayon-petit);
+    text-transform: uppercase;
+    font-size: 0.8rem;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    transition: color 0.18s linear;
   }
-  /* Forêt : transitions linéaires simples au survol des éléments cliquables */
-  :global(html[data-style="foret"]) nav a {
-    transition: background 0.18s linear, color 0.18s linear;
+  :global(html[data-style="style2"]) nav a::after {
+    content: "";
+    position: absolute;
+    left: 50%;
+    right: 50%;
+    bottom: 0.6rem;
+    height: 1px;
+    background: var(--rouge);
+    transition: left 0.22s linear, right 0.22s linear;
   }
-  :global(html[data-style="foret"]) nav a:hover {
-    background: var(--surface-hover);
+  :global(html[data-style="style2"]) nav a:hover {
     color: var(--bleu);
   }
-  :global(html[data-style="foret"]) nav a[aria-current="page"] {
-    background: var(--accent-vif);
-    color: var(--blanc);
+  :global(html[data-style="style2"]) nav a:hover::after,
+  :global(html[data-style="style2"]) nav a[aria-current="page"]::after {
+    left: 1.25rem;
+    right: 1.25rem;
+  }
+  :global(html[data-style="style2"]) nav a[aria-current="page"] {
+    color: var(--rouge);
     font-weight: 700;
   }
-  /* Techno : transparence + halo néon au survol */
-  :global(html[data-style="techno"]) nav a {
-    transition: background 0.2s ease, color 0.2s ease, box-shadow 0.2s ease;
+
+  /* Style 3 — affiche : nom en Bebas Neue, liens capitales avec aplat de couleur au survol (snap) */
+  :global(html[data-style="style3"]) .nom-commune {
+    font-family: var(--ff-disp);
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    font-size: 1.7rem;
   }
-  :global(html[data-style="techno"]) nav a:hover {
-    background: var(--surface-hover);
-    color: var(--blanc);
-    box-shadow: 0 0 16px rgb(59 130 246 / 35%);
+  :global(html[data-style="style3"]) nav {
+    position: sticky;
+    top: 0;
+    z-index: 20;
+    background: var(--blanc);
   }
-  :global(html[data-style="techno"]) nav a[aria-current="page"] {
-    background: var(--degrade-vif);
-    color: var(--blanc);
-    box-shadow: var(--ombre-glow);
+  :global(html[data-style="style3"]) nav a {
+    border-bottom: none;
+    text-transform: uppercase;
     font-weight: 700;
+    letter-spacing: 0.03em;
+    transition: background 0.12s linear, color 0.12s linear;
+  }
+  :global(html[data-style="style3"]) nav a:hover {
+    background: var(--bleu);
+    color: var(--blanc);
+  }
+  :global(html[data-style="style3"]) nav a[aria-current="page"] {
+    background: var(--rouge);
+    color: var(--blanc);
   }
 </style>

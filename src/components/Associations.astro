@@ -74,40 +74,27 @@ try {
   .carte a:hover { text-decoration: underline; }
   .vide { color: var(--gris-t); font-style: italic; }
 
-  :global(html[data-style="foret"]) .carte,
-  :global(html[data-style="techno"]) .carte {
-    position: relative;
-    border-top: none;
-    border-radius: var(--rayon);
+  /* Style 2 — carte plate, filet rouge en tête, fond qui s'éclaircit au survol (linéaire) */
+  :global(html[data-style="style2"]) .carte {
+    border: none;
+    border-top: 2px solid var(--rouge);
+    border-radius: 0;
+    background: transparent;
+    transition: background 0.18s linear;
   }
-  :global(html[data-style="foret"]) .carte::before,
-  :global(html[data-style="techno"]) .carte::before {
-    content: "";
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    height: 4px;
-    border-radius: var(--rayon) var(--rayon) 0 0;
-    background: var(--degrade-vif);
+  :global(html[data-style="style2"]) .carte:hover {
+    background: var(--surface-hover);
   }
-  :global(html[data-style="foret"]) .carte a,
-  :global(html[data-style="techno"]) .carte a {
-    color: var(--bleu);
-  }
-  :global(html[data-style="foret"]) .carte {
-    transition: transform 0.2s linear, box-shadow 0.2s linear;
-  }
-  :global(html[data-style="foret"]) .carte:hover {
-    transform: translateY(-5px);
+
+  /* Style 3 — carte à bordure franche et ombre portée dure */
+  :global(html[data-style="style3"]) .carte {
+    border: 2px solid var(--bleu);
+    border-radius: 0;
     box-shadow: var(--ombre-carte);
+    transition: transform 0.15s linear, box-shadow 0.15s linear;
   }
-  :global(html[data-style="techno"]) .carte {
-    animation: apparition 0.5s ease both;
-    transition: transform 0.25s ease, box-shadow 0.25s ease;
-  }
-  :global(html[data-style="techno"]) .carte:hover {
-    transform: translateY(-5px);
-    box-shadow: var(--ombre-glow);
+  :global(html[data-style="style3"]) .carte:hover {
+    transform: translate(-3px, -3px);
+    box-shadow: 9px 9px 0 var(--rouge);
   }
 </style>
