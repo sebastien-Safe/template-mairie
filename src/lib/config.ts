@@ -1,7 +1,7 @@
 import { readFileSync } from "fs";
 import { join } from "path";
 
-export type StyleSite = "simple" | "moderne";
+export type StyleSite = "simple" | "foret" | "techno";
 
 export interface CommuneConfig {
   nom_commune: string;
@@ -25,7 +25,7 @@ const defauts: CommuneConfig = {
   style: "simple",
 };
 
-const STYLES_VALIDES: StyleSite[] = ["simple", "moderne"];
+const STYLES_VALIDES: StyleSite[] = ["simple", "foret", "techno"];
 
 function chargerConfig(): CommuneConfig {
   const config: Record<string, string> = { ...defauts };

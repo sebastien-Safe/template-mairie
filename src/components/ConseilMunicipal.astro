@@ -74,26 +74,26 @@ try {
   p { font-size: 0.85rem; color: var(--gris-t); margin: 0; }
   .vide { color: var(--gris-t); font-style: italic; }
 
-  :global(html[data-style="moderne"]) .membre-carte {
-    transition: transform 0.25s ease;
-  }
-  :global(html[data-style="moderne"]) .membre-carte:hover {
-    transform: translateY(-4px);
-  }
-  :global(html[data-style="moderne"]) .photo {
+  :global(html[data-style="foret"]) .photo,
+  :global(html[data-style="techno"]) .photo {
     border: none;
     padding: 3px;
     box-sizing: border-box;
     background: var(--degrade-vif);
   }
-  :global(html[data-style="moderne"]) .membre-carte:hover .photo {
-    animation: pulsation 1.4s ease-in-out infinite;
+  :global(html[data-style="foret"]) .membre-carte {
+    transition: transform 0.2s linear;
   }
-  :global(html[data-style="moderne"]) strong {
-    background: var(--degrade-texte);
-    -webkit-background-clip: text;
-    background-clip: text;
-    -webkit-text-fill-color: transparent;
-    color: transparent;
+  :global(html[data-style="foret"]) .membre-carte:hover {
+    transform: translateY(-4px);
+  }
+  :global(html[data-style="techno"]) .membre-carte {
+    transition: transform 0.25s ease;
+  }
+  :global(html[data-style="techno"]) .membre-carte:hover {
+    transform: translateY(-4px);
+  }
+  :global(html[data-style="techno"]) .membre-carte:hover .photo {
+    animation: pulsation 1.4s ease-in-out infinite;
   }
 </style>

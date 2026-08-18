@@ -122,11 +122,17 @@ const demarches = [
     white-space: nowrap;
   }
 
-  :global(html[data-style="moderne"]) .notice {
+  :global(html[data-style="foret"]) .notice,
+  :global(html[data-style="techno"]) .notice,
+  :global(html[data-style="foret"]) .demarche-carte,
+  :global(html[data-style="techno"]) .demarche-carte {
     border-left: none;
     position: relative;
   }
-  :global(html[data-style="moderne"]) .notice::before {
+  :global(html[data-style="foret"]) .notice::before,
+  :global(html[data-style="techno"]) .notice::before,
+  :global(html[data-style="foret"]) .demarche-carte::before,
+  :global(html[data-style="techno"]) .demarche-carte::before {
     content: "";
     position: absolute;
     left: 0;
@@ -136,33 +142,22 @@ const demarches = [
     border-radius: var(--rayon) 0 0 var(--rayon);
     background: var(--degrade-vif);
   }
-  :global(html[data-style="moderne"]) .demarche-carte {
-    border-left: none;
-    position: relative;
+  :global(html[data-style="foret"]) .badge,
+  :global(html[data-style="techno"]) .badge {
+    background: var(--degrade-vif);
+  }
+  :global(html[data-style="foret"]) .demarche-carte {
+    transition: transform 0.2s linear, box-shadow 0.2s linear;
+  }
+  :global(html[data-style="foret"]) .demarche-carte:hover {
+    transform: translateY(-4px);
+    box-shadow: var(--ombre-carte);
+  }
+  :global(html[data-style="techno"]) .demarche-carte {
     transition: transform 0.25s ease, box-shadow 0.25s ease;
   }
-  :global(html[data-style="moderne"]) .demarche-carte::before {
-    content: "";
-    position: absolute;
-    left: 0;
-    top: 0;
-    bottom: 0;
-    width: 4px;
-    border-radius: var(--rayon) 0 0 var(--rayon);
-    background: var(--degrade-vif);
-  }
-  :global(html[data-style="moderne"]) .demarche-carte:hover {
+  :global(html[data-style="techno"]) .demarche-carte:hover {
     transform: translateY(-4px);
     box-shadow: var(--ombre-glow);
-  }
-  :global(html[data-style="moderne"]) .demarche-contenu strong {
-    background: var(--degrade-texte);
-    -webkit-background-clip: text;
-    background-clip: text;
-    -webkit-text-fill-color: transparent;
-    color: transparent;
-  }
-  :global(html[data-style="moderne"]) .badge {
-    background: var(--degrade-vif);
   }
 </style>

@@ -74,42 +74,33 @@ const annee = new Date().getFullYear();
     }
   }
 
-  :global(html[data-style="moderne"]) footer {
+  :global(html[data-style="foret"]) footer {
+    background: var(--degrade-vif);
+  }
+  :global(html[data-style="foret"]) nav a {
+    transition: opacity 0.18s linear;
+  }
+
+  :global(html[data-style="techno"]) footer {
     position: relative;
     overflow: hidden;
-    background: linear-gradient(135deg, #0B1948 0%, #241757 45%, #4C1D95 100%);
-    background-size: 200% 200%;
-    animation: degrade-mouvant 22s ease infinite;
+    background: linear-gradient(135deg, #0A1628 0%, #142240 100%);
   }
-  :global(html[data-style="moderne"]) footer::before {
+  :global(html[data-style="techno"]) footer::before {
     content: "";
     position: absolute;
     inset: 0 0 auto 0;
-    height: 4px;
-    background: linear-gradient(90deg, var(--accent-cyan), var(--accent-vif), var(--accent-rose));
+    height: 3px;
+    background: linear-gradient(90deg, var(--accent-vif), var(--accent-or));
   }
-  :global(html[data-style="moderne"]) nav a {
+  :global(html[data-style="techno"]) nav a {
     position: relative;
     text-decoration: none;
-    opacity: 0.9;
-    transition: opacity 0.2s ease;
+    opacity: 0.85;
+    transition: opacity 0.2s ease, text-shadow 0.2s ease;
   }
-  :global(html[data-style="moderne"]) nav a::after {
-    content: "";
-    position: absolute;
-    left: 0;
-    right: 0;
-    bottom: -3px;
-    height: 2px;
-    background: linear-gradient(90deg, var(--accent-cyan), var(--accent-rose));
-    transform: scaleX(0);
-    transform-origin: left;
-    transition: transform 0.25s ease;
-  }
-  :global(html[data-style="moderne"]) nav a:hover {
+  :global(html[data-style="techno"]) nav a:hover {
     opacity: 1;
-  }
-  :global(html[data-style="moderne"]) nav a:hover::after {
-    transform: scaleX(1);
+    text-shadow: 0 0 10px rgb(59 130 246 / 55%);
   }
 </style>

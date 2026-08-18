@@ -46,13 +46,20 @@ const jours = [
   dt { font-weight: 600; color: var(--texte); }
   dd { color: var(--gris-t); text-align: right; }
 
-  :global(html[data-style="moderne"]) .ligne {
+  :global(html[data-style="foret"]) .ligne,
+  :global(html[data-style="techno"]) .ligne {
     border-bottom-color: var(--surface-bordure);
     border-radius: var(--rayon-petit);
     padding: 0.5rem 0.75rem;
+  }
+  :global(html[data-style="foret"]) .ligne {
+    transition: background 0.18s linear;
+  }
+  :global(html[data-style="techno"]) .ligne {
     transition: background 0.2s ease;
   }
-  :global(html[data-style="moderne"]) .ligne:hover {
+  :global(html[data-style="foret"]) .ligne:hover,
+  :global(html[data-style="techno"]) .ligne:hover {
     background: var(--surface-hover);
   }
 </style>

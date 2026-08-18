@@ -6,7 +6,8 @@ import { commune } from "../lib/config";
   <span class="etiquette" id="etiquette-style">Style</span>
   <div role="group" aria-labelledby="etiquette-style">
     <button type="button" data-valeur="simple" aria-pressed={commune.style === "simple"}>Simple</button>
-    <button type="button" data-valeur="moderne" aria-pressed={commune.style === "moderne"}>Moderne</button>
+    <button type="button" data-valeur="foret" aria-pressed={commune.style === "foret"}>Forêt</button>
+    <button type="button" data-valeur="techno" aria-pressed={commune.style === "techno"}>Techno</button>
   </div>
 </div>
 
@@ -64,8 +65,11 @@ import { commune } from "../lib/config";
     .etiquette { display: none; }
   }
 
-  :global(html[data-style="moderne"]) button[aria-pressed="true"] {
+  :global(html[data-style="foret"]) button[aria-pressed="true"],
+  :global(html[data-style="techno"]) button[aria-pressed="true"] {
     background: var(--degrade-vif);
+  }
+  :global(html[data-style="techno"]) button[aria-pressed="true"] {
     box-shadow: var(--ombre-glow);
   }
 </style>

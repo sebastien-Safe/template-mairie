@@ -68,57 +68,68 @@ const pathname = Astro.url.pathname;
     nav a { padding: 0.75rem 0; }
   }
 
-  :global(html[data-style="moderne"]) header {
+  :global(html[data-style="foret"]) header,
+  :global(html[data-style="techno"]) header {
     border-bottom: none;
     box-shadow: var(--ombre-carte);
   }
-  :global(html[data-style="moderne"]) .barre-top {
+  :global(html[data-style="foret"]) .barre-top,
+  :global(html[data-style="techno"]) .barre-top {
     background: var(--degrade-vif);
+  }
+  :global(html[data-style="techno"]) .barre-top {
     background-size: 200% 200%;
     animation: degrade-mouvant 16s ease infinite;
   }
-  :global(html[data-style="moderne"]) .nom-commune {
+  :global(html[data-style="techno"]) .nom-commune {
     text-shadow: 0 2px 12px rgb(0 0 0 / 20%);
   }
-  :global(html[data-style="moderne"]) nav {
+  :global(html[data-style="foret"]) nav,
+  :global(html[data-style="techno"]) nav {
     background: var(--surface);
     backdrop-filter: var(--flou);
     -webkit-backdrop-filter: var(--flou);
     position: sticky;
     top: 0;
     z-index: 20;
+    border-bottom: 1px solid var(--surface-bordure);
   }
-  :global(html[data-style="moderne"]) nav a {
-    position: relative;
-    border-bottom-color: transparent;
-    transition: color 0.2s ease, transform 0.2s ease;
+  :global(html[data-style="foret"]) nav ul,
+  :global(html[data-style="techno"]) nav ul {
+    gap: 0.25rem;
+    padding: 0.5rem 0;
   }
-  :global(html[data-style="moderne"]) nav a::after {
-    content: "";
-    position: absolute;
-    left: 1.25rem;
-    right: 1.25rem;
-    bottom: 0;
-    height: 3px;
-    border-radius: 2px 2px 0 0;
+  :global(html[data-style="foret"]) nav a,
+  :global(html[data-style="techno"]) nav a {
+    border-bottom: none;
+    border-radius: var(--rayon-petit);
+  }
+  /* Forêt : transitions linéaires simples au survol des éléments cliquables */
+  :global(html[data-style="foret"]) nav a {
+    transition: background 0.18s linear, color 0.18s linear;
+  }
+  :global(html[data-style="foret"]) nav a:hover {
+    background: var(--surface-hover);
+    color: var(--bleu);
+  }
+  :global(html[data-style="foret"]) nav a[aria-current="page"] {
+    background: var(--accent-vif);
+    color: var(--blanc);
+    font-weight: 700;
+  }
+  /* Techno : transparence + halo néon au survol */
+  :global(html[data-style="techno"]) nav a {
+    transition: background 0.2s ease, color 0.2s ease, box-shadow 0.2s ease;
+  }
+  :global(html[data-style="techno"]) nav a:hover {
+    background: var(--surface-hover);
+    color: var(--blanc);
+    box-shadow: 0 0 16px rgb(59 130 246 / 35%);
+  }
+  :global(html[data-style="techno"]) nav a[aria-current="page"] {
     background: var(--degrade-vif);
-    transform: scaleX(0);
-    transform-origin: left;
-    transition: transform 0.25s ease;
-  }
-  :global(html[data-style="moderne"]) nav a:hover {
-    color: var(--accent-vif);
-    transform: translateY(-1px);
-  }
-  :global(html[data-style="moderne"]) nav a:hover::after,
-  :global(html[data-style="moderne"]) nav a[aria-current="page"]::after {
-    transform: scaleX(1);
-  }
-  :global(html[data-style="moderne"]) nav a[aria-current="page"] {
-    background: var(--degrade-texte);
-    -webkit-background-clip: text;
-    background-clip: text;
-    -webkit-text-fill-color: transparent;
-    color: transparent;
+    color: var(--blanc);
+    box-shadow: var(--ombre-glow);
+    font-weight: 700;
   }
 </style>

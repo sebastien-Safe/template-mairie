@@ -107,18 +107,13 @@ import { commune, identite } from "../lib/config";
   .doc-lien small { color: var(--gris-t); font-size: 0.8rem; }
   .doc-icone { font-size: 1.5rem; flex-shrink: 0; }
 
-  :global(html[data-style="moderne"]) .photo-mairie {
-    transition: transform 0.35s ease;
-  }
-  :global(html[data-style="moderne"]) .photo-mairie:hover {
-    transform: scale(1.015);
-  }
-  :global(html[data-style="moderne"]) .doc-lien {
+  :global(html[data-style="foret"]) .doc-lien,
+  :global(html[data-style="techno"]) .doc-lien {
     border-left: none;
     position: relative;
-    transition: transform 0.25s ease, box-shadow 0.25s ease;
   }
-  :global(html[data-style="moderne"]) .doc-lien::before {
+  :global(html[data-style="foret"]) .doc-lien::before,
+  :global(html[data-style="techno"]) .doc-lien::before {
     content: "";
     position: absolute;
     left: 0;
@@ -128,7 +123,25 @@ import { commune, identite } from "../lib/config";
     border-radius: var(--rayon) 0 0 var(--rayon);
     background: var(--degrade-vif);
   }
-  :global(html[data-style="moderne"]) .doc-lien:hover {
+  :global(html[data-style="foret"]) .photo-mairie,
+  :global(html[data-style="foret"]) .doc-lien {
+    transition: transform 0.2s linear, box-shadow 0.2s linear;
+  }
+  :global(html[data-style="foret"]) .photo-mairie:hover {
+    transform: scale(1.01);
+  }
+  :global(html[data-style="foret"]) .doc-lien:hover {
+    transform: translateY(-3px);
+    box-shadow: var(--ombre-carte);
+  }
+  :global(html[data-style="techno"]) .photo-mairie,
+  :global(html[data-style="techno"]) .doc-lien {
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+  }
+  :global(html[data-style="techno"]) .photo-mairie:hover {
+    transform: scale(1.015);
+  }
+  :global(html[data-style="techno"]) .doc-lien:hover {
     transform: translateY(-3px);
     box-shadow: var(--ombre-glow);
   }

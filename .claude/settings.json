@@ -6,7 +6,14 @@
       "Bash(python3 -c ' *)",
       "Bash(astro dev *)",
       "Bash(git commit -m ' *)",
-      "Bash(npx astro *)"
+      "Bash(npx astro *)",
+      "Bash(git add *)",
+      "Bash(git commit *)",
+      "Bash(git push *)",
+      "Bash(npm run dev)",
+      "Bash(npm run build)",
+      "Bash(npm run deploy)",
+      "Bash(wrangler deploy *)"
     ]
   }
 }
