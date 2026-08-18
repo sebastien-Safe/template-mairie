@@ -1,0 +1,13 @@
+{
+  "$schema": "../node_modules/wrangler/config-schema.json",
+  "name": "template-mairie-cms-auth",
+  "main": "src/index.ts",
+  "compatibility_date": "2026-08-18",
+  "vars": {
+    "GITHUB_CLIENT_ID": "Ov23livMhdq7OZgrkjFA",
+    "ALLOWED_ORIGIN": "https://demo-mairie.safe-digitalisation.fr"
+  },
+  "routes": [
+    { "pattern": "cms-auth.safe-digitalisation.fr", "custom_domain": true }
+  ]
+}

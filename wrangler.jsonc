@@ -1,0 +1,12 @@
+{
+  "$schema": "./node_modules/wrangler/config-schema.json",
+  "name": "template-mairie",
+  "compatibility_date": "2026-08-18",
+  "assets": {
+    "directory": "./dist",
+    "html_handling": "auto-trailing-slash"
+  },
+  "routes": [
+    { "pattern": "demo-mairie.safe-digitalisation.fr", "custom_domain": true }
+  ]
+}

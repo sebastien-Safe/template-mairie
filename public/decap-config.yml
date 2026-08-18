@@ -1,6 +1,8 @@
 backend:
-  name: git-gateway
+  name: github
+  repo: sebastien-Safe/template-mairie
   branch: main
+  base_url: https://cms-auth.safe-digitalisation.fr
 
 locale: fr
 

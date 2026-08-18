@@ -2,7 +2,7 @@
 
 Template Astro pour sites de mairies rurales françaises, conforme à la charte
 républicaine (RGAA 4.1), pensé pour être dupliqué et personnalisé par chaque
-commune, et déployé simplement sur Netlify.
+commune, et déployé simplement sur Cloudflare Workers.
 
 ## Stack
 
@@ -11,8 +11,10 @@ commune, et déployé simplement sur Netlify.
   (à l'exception de l'interface d'administration Decap CMS)
 - Contenu géré en Markdown (`src/content/`)
 - Interface d'édition : [Decap CMS](https://decapcms.org) (`public/admin.html`)
-- Hébergement : [Netlify](https://netlify.com) — build et déploiement
-  automatiques à chaque push sur `main`, HTTPS géré nativement
+- Hébergement : [Cloudflare Workers](https://developers.cloudflare.com/workers/static-assets/)
+  (assets statiques, `wrangler.jsonc`), HTTPS géré nativement
+- Authentification Decap CMS : backend GitHub, via un Worker proxy OAuth
+  dédié (`oauth-worker/`)
 
 ## Développement
 
@@ -40,6 +42,8 @@ public/
   admin.html                         # interface Decap CMS
   decap-config.yml                   # configuration des collections Decap CMS
   _headers                           # headers de sécurité (voir plus bas)
+oauth-worker/                        # Worker proxy OAuth GitHub pour Decap CMS
+wrangler.jsonc                       # config Cloudflare Workers du site
 ```
 
 Les informations de la commune (`src/content/config.md`) sont lues côté
@@ -54,17 +58,26 @@ L'interface d'édition est accessible sur `/admin.html`.
   l'interface sans authentification, avec des données stockées uniquement en
   mémoire dans le navigateur (rien n'est écrit sur GitHub). C'est le mode à
   utiliser pour valider l'interface avant de la connecter à un vrai dépôt.
-- **Sur ce dépôt de démo**, le backend est `git-gateway`
-  (`public/decap-config.yml` → `backend.name: git-gateway`), qui s'appuie sur
-  Netlify Identity + Git Gateway : les modifications faites dans `/admin.html`
-  sont réellement commitées sur `main`. Prérequis côté Netlify (à faire une
-  fois, dans le dashboard du site) :
-  1. **Site settings → Identity → Enable Identity**.
-  2. **Identity → Registration** : passer sur *Invite only*.
-  3. **Identity → Services → Git Gateway → Enable Git Gateway**.
-  4. Inviter les utilisateurs admin depuis l'onglet *Identity* (email
-     d'invitation avec lien vers le site, qui redirige ensuite vers
-     `/admin.html` — géré par le script dans `CharteRepublicaine.astro`).
+- **Sur ce dépôt de démo**, le backend est `github`
+  (`public/decap-config.yml` → `backend.name: github`) : les modifications
+  faites dans `/admin.html` sont réellement commitées sur `main`, après
+  connexion avec un compte GitHub ayant accès au dépôt. L'authentification
+  passe par un petit Worker proxy OAuth dédié (`oauth-worker/`), Cloudflare
+  n'ayant pas d'équivalent intégré à Netlify Identity/Git Gateway. Prérequis
+  (à faire une fois) :
+  1. Déployer `oauth-worker/` (`npm run deploy:oauth-worker`) pour obtenir
+     son URL.
+  2. Créer une **OAuth App** sur GitHub (*Settings → Developer settings →
+     OAuth Apps → New OAuth App*) avec :
+     - **Homepage URL** : l'URL du site (ex. `https://demo-mairie.safe-digitalisation.fr`).
+     - **Authorization callback URL** : `<url-du-oauth-worker>/callback`.
+  3. Poser les identifiants générés sur le Worker OAuth :
+     `wrangler secret put GITHUB_CLIENT_SECRET` (et renseigner
+     `GITHUB_CLIENT_ID` dans `oauth-worker/wrangler.jsonc`).
+  4. Vérifier que `base_url` dans `public/decap-config.yml` pointe bien vers
+     l'URL du Worker OAuth, puis redéployer le site.
+  5. Donner accès en écriture au dépôt GitHub aux utilisateurs admin (ils se
+     connectent directement sur `/admin.html` avec leur compte GitHub).
 - **En production pour une vraie commune (agents publics)**, basculer sur le
   backend GitHub avec ProConnect :
 
@@ -80,29 +93,34 @@ L'interface d'édition est accessible sur `/admin.html`.
   Cela nécessite qu'un client OAuth ProConnect soit enregistré pour le
   domaine du site (voir procédure d'onboarding ci-dessous).
 
-## Déploiement (Netlify)
+## Déploiement (Cloudflare Workers)
 
-Le build est défini dans `netlify.toml` (`npm run build`, publie `dist/`).
-Aucune CI à maintenir : une fois le dépôt connecté à Netlify, chaque push
-sur `main` déclenche un build et un déploiement automatiques.
+Le build (`npm run build`) génère `dist/`, servi tel quel comme assets
+statiques par le Worker défini dans `wrangler.jsonc`. Pas de CI à
+maintenir pour un déploiement manuel :
 
-1. Sur [app.netlify.com](https://app.netlify.com), **Add new site → Import
-   an existing project**, choisir le dépôt GitHub de la commune.
-2. Netlify détecte `netlify.toml` automatiquement (commande de build et
-   dossier de publication déjà configurés) — valider le déploiement.
-3. Le site est en ligne sur une URL `*.netlify.app` en quelques dizaines de
-   secondes, en HTTPS par défaut.
+1. `wrangler login` (une fois, authentifie la CLI avec le compte
+   Cloudflare).
+2. `npm run deploy` (build + `wrangler deploy`).
+3. Le site est en ligne sur une URL `*.workers.dev` en quelques secondes,
+   en HTTPS par défaut. Pour brancher un nom de domaine, ajouter son
+   hostname dans `routes` (`wrangler.jsonc`, `custom_domain: true`) puis
+   redéployer — Cloudflare crée l'enregistrement DNS et le certificat TLS
+   automatiquement (la zone du domaine doit déjà être gérée par Cloudflare).
+
+Pour une intégration continue (déploiement automatique à chaque push), voir
+l'action GitHub officielle
+[`cloudflare/wrangler-action`](https://github.com/cloudflare/wrangler-action).
 
 ## SSL / HTTPS et headers de sécurité
 
-Netlify gère automatiquement le certificat **Let's Encrypt** dès qu'un nom
-de domaine personnalisé est attaché au site (**Site settings → Domain
-management → Add a domain**), y compris son renouvellement — aucune action
-manuelle après la configuration initiale du DNS (CNAME vers le sous-domaine
-`*.netlify.app`, ou délégation de zone si domaine apex).
+Cloudflare gère automatiquement le certificat TLS pour tout hostname attaché
+via `routes`/`custom_domain` dans `wrangler.jsonc`, y compris son
+renouvellement — aucune action manuelle après la configuration initiale.
 
-`public/_headers` est lu **nativement** par Netlify au déploiement : les
-headers `X-Frame-Options`, `X-Content-Type-Options`, `Referrer-Policy`,
+`public/_headers` est lu **nativement** par Cloudflare Workers (assets
+statiques) au déploiement, avec la même syntaxe que Netlify : les headers
+`X-Frame-Options`, `X-Content-Type-Options`, `Referrer-Policy`,
 `Permissions-Policy` et `Content-Security-Policy` qui y sont définis sont
 appliqués tels quels, sans configuration supplémentaire. C'est ce qui
 permet d'atteindre un score [Mozilla Observatory](https://observatory.mozilla.org/)
@@ -120,15 +138,18 @@ correct (B- et au-delà) dès le premier déploiement.
    actualités (`src/content/actus/`), associations
    (`src/content/associations/`), pages `mairie.astro` (conseil municipal)
    et `vie-locale.astro` (écoles, commerces, collecte des déchets).
-4. **Configurer Decap CMS** (`public/decap-config.yml`) : passer
-   `backend.name` de `test-repo` à `github`, renseigner `backend.repo`,
-   puis choisir l'authentification :
-   - **Simple** : activer *Identity* + *Git Gateway* dans les paramètres
-     du site Netlify (quelques clics, aucun enregistrement OAuth requis).
+4. **Configurer Decap CMS** (`public/decap-config.yml`) : renseigner
+   `backend.repo` avec le dépôt de la commune, puis choisir
+   l'authentification :
+   - **Simple** : backend `github` + Worker proxy OAuth dédié (voir
+     « Administration (Decap CMS) » ci-dessus) — dupliquer `oauth-worker/`
+     avec un nom distinct pour chaque commune, ou réutiliser un Worker OAuth
+     partagé si les admins ont accès au dépôt via la même organisation
+     GitHub.
    - **Agents publics (ProConnect)** : garder `base_url` /
      `auth_endpoint` pointés sur ProConnect, en enregistrant un client
      OAuth pour le domaine de la commune.
-5. **Connecter le dépôt à Netlify** (voir « Déploiement » ci-dessus).
+5. **Déployer sur Cloudflare Workers** (voir « Déploiement » ci-dessus).
 6. **Attacher le domaine de la commune** et vérifier l'émission du
    certificat SSL (voir « SSL / HTTPS » ci-dessus).
 7. **Vérifier** : navigation complète du site, interface `/admin.html`,
